@@ -1,0 +1,7 @@
+services:
+  portofolio:
+    build: .
+    container_name: portofolio
+    restart: unless-stopped
+    ports:
+      - "80:80"
