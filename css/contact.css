@@ -1,0 +1,191 @@
+/* ─── Contact ─── */
+
+#contact {
+  background: var(--bg-card);
+}
+
+.contact-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: stretch;
+}
+
+.contact-left {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  justify-content: flex-start;
+}
+
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  height: 100%;
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: 0.5rem;
+  padding: 0.45rem 1.25rem;
+  background: rgba(63, 185, 80, 0.1);
+  border: 1px solid rgba(63, 185, 80, 0.3);
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--success);
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--success);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(0.85);
+  }
+}
+
+.contact-description {
+  line-height: 1.8;
+  font-size: 1rem;
+  color: var(--text-muted);
+}
+
+.contact-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.detail-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0;
+  font-size: 0.9rem;
+  color: var(--text);
+}
+
+.detail-item:not(:last-child) {
+  border-bottom: 1px solid var(--border);
+}
+
+.detail-item svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  color: var(--accent);
+}
+
+.detail-link {
+  color: inherit;
+  text-decoration: none;
+  transition: color var(--transition);
+}
+
+.detail-link:hover {
+  color: var(--accent);
+}
+
+.discord-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  background: rgba(88, 101, 242, 0.08);
+  border: 1px solid rgba(88, 101, 242, 0.2);
+  border-radius: var(--radius);
+}
+
+.discord-card-content {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.discord-card-content svg {
+  color: #5865f2;
+  flex-shrink: 0;
+}
+
+.discord-card-title {
+  display: block;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text);
+}
+
+.discord-card-desc {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: 0.15rem;
+}
+
+.discord-card-btn {
+  padding: 0.4rem 1rem;
+  background: #5865f2;
+  color: #fff;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: var(--transition);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.discord-card-btn:hover {
+  background: #4752c4;
+  transform: translateY(-1px);
+}
+
+.connect-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.connect-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.connect-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.connect-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.6rem 0.8rem;
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  transition: var(--transition);
+}
+
+.connect-link:hover {
+  color: var(--accent);
+  background: rgba(88, 166, 255, 0.05);
+  transform: translateX(4px);
+}
