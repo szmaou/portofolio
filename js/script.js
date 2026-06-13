@@ -198,7 +198,8 @@ document.addEventListener("DOMContentLoaded", () => {
     navMenu.classList.toggle("active");
   });
 
-  document.querySelectorAll(".nav-link").forEach((link) => {
+  document.querySelectorAll(".nav-link").forEach((link, i) => {
+    link.style.setProperty("--i", i);
     link.addEventListener("click", () => {
       hamburger.classList.remove("active");
       navMenu.classList.remove("active");
