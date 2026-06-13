@@ -43,30 +43,11 @@ Personal portfolio website — vanilla HTML, CSS, and JavaScript.
 
 ## Getting Started
 
-**Auto (picks the best available method):**
 ```bash
-chmod +x run.sh
-./run.sh           # default port 8080
-./run.sh 3000      # custom port
+./run.sh --docker          # default port 8080
+./run.sh --python 3000     # custom port
+./run.sh --npx
 ```
-
-**Docker:**
-```bash
-docker compose up -d --build
-# → http://localhost:8080
-```
-
-**Python:**
-```bash
-python3 -m http.server 8080
-```
-
-**Node:**
-```bash
-npx http-server -p 8080
-```
-
-**Manual:** Open `index.html` directly in your browser.
 
 ## License
 
