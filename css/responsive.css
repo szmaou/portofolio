@@ -84,6 +84,14 @@
     grid-template-columns: 1fr;
   }
 
+  .about-stats-row > .about-side-block:first-child {
+    order: 2;
+  }
+
+  .about-stats-row > .about-side-block:last-child {
+    order: 1;
+  }
+
   .about-side {
     order: -1;
   }
@@ -117,6 +125,10 @@
   .contact-content {
     grid-template-columns: 1fr;
     gap: 1.5rem;
+  }
+
+  .contact-info > .connect-section {
+    order: -1;
   }
 
   .section {
