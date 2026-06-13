@@ -1,4 +1,14 @@
 document.addEventListener("DOMContentLoaded", () => {
+  /* ─── Loader ─── */
+
+  let loadCount = 0;
+  const loader = document.getElementById("loader");
+
+  function loaderDone() {
+    loadCount++;
+    if (loadCount === 2) loader.classList.add("hidden");
+  }
+
   /* ─── Theme Toggle ─── */
 
   const themeToggle = document.getElementById("theme-toggle");
@@ -44,6 +54,8 @@ document.addEventListener("DOMContentLoaded", () => {
       reposEl.textContent = "—";
       followersEl.textContent = "—";
       followingEl.textContent = "—";
+    } finally {
+      loaderDone();
     }
   }
 
@@ -74,6 +86,8 @@ document.addEventListener("DOMContentLoaded", () => {
       grid.innerHTML =
         '<p class="loading-repos">Gagal memuat repositori. Coba reload.</p>';
       document.getElementById("pagination").style.display = "none";
+    } finally {
+      loaderDone();
     }
   }
 
