@@ -41,20 +41,32 @@ Personal portfolio website — vanilla HTML, CSS, and JavaScript.
     └── slime.webp
 ```
 
-## Docker Deployment
+## Cara Jalanin
 
+**Auto (pilih metode yang available):**
 ```bash
-# Build & run
+chmod +x run.sh
+./run.sh           # default port 8080
+./run.sh 3000      # custom port
+```
+
+**Docker:**
+```bash
 docker compose up -d --build
-
-# Open http://localhost:80
+# → http://localhost:8080
 ```
 
-### Update
-
+**Python:**
 ```bash
-git pull && docker compose up -d --build
+python3 -m http.server 8080
 ```
+
+**Node:**
+```bash
+npx http-server -p 8080
+```
+
+**Manual:** Buka `index.html` langsung di browser.
 
 ## License
 
