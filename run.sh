@@ -10,7 +10,7 @@ case "$1" in
     python3 -m http.server "$PORT"
     ;;
   --npx)
-    npx http-server -p "$PORT"
+    npx live-server --port="$PORT" --no-browser
     ;;
   *)
     echo "Usage: ./run.sh --docker | --python | --npx [port]"
