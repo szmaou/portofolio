@@ -41,9 +41,9 @@ Personal portfolio website — vanilla HTML, CSS, and JavaScript.
     └── slime.webp
 ```
 
-## Cara Jalanin
+## Getting Started
 
-**Auto (pilih metode yang available):**
+**Auto (picks the best available method):**
 ```bash
 chmod +x run.sh
 ./run.sh           # default port 8080
@@ -66,7 +66,7 @@ python3 -m http.server 8080
 npx http-server -p 8080
 ```
 
-**Manual:** Buka `index.html` langsung di browser.
+**Manual:** Open `index.html` directly in your browser.
 
 ## License
 

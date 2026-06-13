@@ -13,5 +13,5 @@ elif command -v npx &> /dev/null; then
   npx http-server -p "$PORT"
 else
   echo "→ No Docker/Python/Node found."
-  echo "→ Buka index.html langsung di browser."
+  echo "→ Open index.html directly in your browser."
 fi
