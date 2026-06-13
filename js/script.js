@@ -125,9 +125,7 @@ document.addEventListener("DOMContentLoaded", () => {
             ${topics}
             <p class="tech-note">— ${repo.language || "Various"}</p>
             <a href="${repo.html_url}" class="repo-link" target="_blank" rel="noopener">
-              <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
-                <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
-              </svg>
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><use href="img/icons.svg#github"/></svg>
               visit the repo
             </a>
           </div>`;
@@ -172,24 +170,22 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   function getRepoIcon(language) {
-    const icons = {
-      HTML: `<svg viewBox="0 0 24 24" width="22" height="22"><path d="M1.5 0h21l-1.91 21.563L11.977 24l-8.565-2.438L1.5 0z" fill="#E34F26"/></svg>`,
-      CSS: `<svg viewBox="0 0 24 24" width="22" height="22"><path d="M1.5 0h21l-1.91 21.563L11.977 24l-8.565-2.438L1.5 0z" fill="#1572B6"/></svg>`,
-      JavaScript: `<svg viewBox="0 0 24 24" width="22" height="22"><rect x="2" y="2" width="20" height="20" rx="3" fill="#F7DF1E"/></svg>`,
-      TypeScript: `<svg viewBox="0 0 24 24" width="22" height="22"><rect x="2" y="2" width="20" height="20" rx="3" fill="#3178C6"/></svg>`,
-      Python: `<svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" fill="#3776AB"/><path d="M9 11l6-3v5l-6 3v-5z" fill="#FFD43B"/></svg>`,
-      Java: `<svg viewBox="0 0 24 24" width="22" height="22"><circle cx="12" cy="12" r="10" fill="#007396"/></svg>`,
-      Shell: `<svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 13l-2-2 3-3-3-3 2-2 5 5-5 5z" fill="#4EAA25"/></svg>`,
-      Lua: `<svg viewBox="0 0 128 128" width="22" height="22"><circle cx="64" cy="64" r="49" fill="#000080"/><circle cx="113" cy="15" r="14.3" fill="#000080"/><circle cx="84" cy="43.7" r="14.3" fill="#000080"/></svg>`,
-      C: `<svg viewBox="0 0 24 24" width="22" height="22"><circle cx="12" cy="12" r="10" fill="#00599C"/></svg>`,
-      "C++": `<svg viewBox="0 0 24 24" width="22" height="22"><circle cx="12" cy="12" r="10" fill="#00599C"/></svg>`,
-      Rust: `<svg viewBox="0 0 24 24" width="22" height="22"><circle cx="12" cy="12" r="10" fill="#DEA584"/></svg>`,
-      Go: `<svg viewBox="0 0 24 24" width="22" height="22"><circle cx="12" cy="12" r="10" fill="#00ADD8"/></svg>`,
+    const iconMap = {
+      HTML: 'html',
+      CSS: 'css',
+      JavaScript: 'javascript',
+      TypeScript: 'typescript',
+      Python: 'python',
+      Java: 'java',
+      Shell: 'shell',
+      Lua: 'lua',
+      C: 'c',
+      'C++': 'cpp',
+      Rust: 'rust',
+      Go: 'go',
     };
-    return (
-      icons[language] ||
-      `<svg viewBox="0 0 24 24" width="22" height="22"><circle cx="12" cy="12" r="10" fill="#888"/></svg>`
-    );
+    const key = iconMap[language] || 'default';
+    return `<svg width="22" height="22"><use href="img/icons.svg#repo-${key}"/></svg>`;
   }
 
   document.querySelectorAll(".sort-btn").forEach((btn) => {
