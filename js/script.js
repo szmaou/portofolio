@@ -145,24 +145,20 @@ document.addEventListener("DOMContentLoaded", () => {
     prevBtn.disabled = currentPage <= 1;
     nextBtn.disabled = currentPage >= totalPages;
     info.textContent = `${currentPage} / ${totalPages}`;
-
-    const projectSection = document.getElementById("project");
-    const rect = projectSection.getBoundingClientRect();
-    if (rect.top < 0 || rect.bottom > window.innerHeight) {
-      projectSection.scrollIntoView({ block: "start" });
-    }
   }
 
   document.getElementById("prev-page").addEventListener("click", () => {
     if (currentPage > 1) {
       currentPage--;
       renderRepos();
+      document.getElementById("project").scrollIntoView({ block: "nearest" });
     }
   });
 
   document.getElementById("next-page").addEventListener("click", () => {
     currentPage++;
     renderRepos();
+    document.getElementById("project").scrollIntoView({ block: "nearest" });
   });
 
   let prevPerPage;
@@ -205,6 +201,7 @@ document.addEventListener("DOMContentLoaded", () => {
       currentSort = btn.dataset.sort;
       currentPage = 1;
       renderRepos();
+      document.getElementById("project").scrollIntoView({ block: "nearest" });
     });
   });
 
