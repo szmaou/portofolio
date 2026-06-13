@@ -55,7 +55,9 @@ document.addEventListener("DOMContentLoaded", () => {
   let allRepos = [];
   let currentSort = "popular";
   let currentPage = 1;
-  const PER_PAGE = 6;
+  function getPerPage() {
+    return window.innerWidth <= 768 ? 3 : 6;
+  }
 
   async function fetchGitHubRepos() {
     const grid = document.getElementById("project-grid");
@@ -92,12 +94,12 @@ document.addEventListener("DOMContentLoaded", () => {
       return new Date(b.updated_at) - new Date(a.updated_at);
     });
 
-    const totalPages = Math.ceil(sorted.length / PER_PAGE);
-    const start = (currentPage - 1) * PER_PAGE;
-    const end = start + PER_PAGE;
+    const totalPages = Math.ceil(sorted.length / getPerPage());
+    const start = (currentPage - 1) * getPerPage();
+    const end = start + getPerPage();
     const pageRepos = sorted.slice(start, end);
 
-    pagination.style.display = sorted.length > PER_PAGE ? "flex" : "none";
+    pagination.style.display = sorted.length > getPerPage() ? "flex" : "none";
 
     grid.innerHTML = pageRepos
       .map((repo) => {
@@ -142,7 +144,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     prevBtn.disabled = currentPage <= 1;
     nextBtn.disabled = currentPage >= totalPages;
-    info.textContent = `Halaman ${currentPage} dari ${totalPages}`;
+    info.textContent = `${currentPage} / ${totalPages}`;
+
+    const projectSection = document.getElementById("project");
+    const rect = projectSection.getBoundingClientRect();
+    if (rect.top < 0 || rect.bottom > window.innerHeight) {
+      projectSection.scrollIntoView({ block: "start" });
+    }
   }
 
   document.getElementById("prev-page").addEventListener("click", () => {
@@ -155,6 +163,16 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("next-page").addEventListener("click", () => {
     currentPage++;
     renderRepos();
+  });
+
+  let prevPerPage;
+  window.addEventListener("resize", () => {
+    const newPerPage = getPerPage();
+    if (prevPerPage && prevPerPage !== newPerPage) {
+      currentPage = 1;
+      renderRepos();
+    }
+    prevPerPage = newPerPage;
   });
 
   function getRepoIcon(language) {
