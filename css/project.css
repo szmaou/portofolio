@@ -159,11 +159,9 @@
 }
 
 .repo-topics {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-  margin-top: 0.5rem;
-  margin-bottom: 0.75rem;
+  margin: 0.25rem 0 0.5rem;
+  font-size: 0.8rem;
+  color: var(--text-muted);
 }
 
 .loading-repos {

@@ -119,9 +119,7 @@ document.addEventListener("DOMContentLoaded", () => {
       .map((repo) => {
         const icon = getRepoIcon(repo.language);
         const topics = repo.topics?.length
-          ? `<div class="repo-topics">${repo.topics
-              .map((t) => `<span class="tech-item">${t}</span>`)
-              .join("")}</div>`
+          ? `<p class="repo-topics">${repo.topics.join(", ")}</p>`
           : "";
         const stars =
           repo.stargazers_count > 0
