@@ -18,13 +18,14 @@
   padding: 1.75rem;
   transition: var(--transition);
   cursor: default;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
 }
 
 .project-card:hover {
   border-color: var(--accent);
   transform: translateY(-6px);
   background: var(--bg-hover);
-  box-shadow: 0 8px 30px rgba(88, 166, 255, 0.1);
+  box-shadow: 0 8px 30px rgba(88, 166, 255, 0.12);
 }
 
 .card-header {
@@ -39,14 +40,14 @@
 }
 
 .card-header h3 {
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   font-weight: 600;
 }
 
 .project-card p {
   color: var(--text-muted);
-  font-size: 0.9rem;
-  line-height: 1.6;
+  font-size: 0.95rem;
+  line-height: 1.7;
   margin-bottom: 1.25rem;
 }
 
@@ -56,7 +57,8 @@
   font-style: italic;
   margin-bottom: 1rem;
   padding-left: 0.5rem;
-  border-left: 2px solid var(--border);
+  border-left: 2px solid var(--accent);
+  opacity: 0.85;
 }
 
 .card-tags {
@@ -151,17 +153,30 @@
   color: var(--accent);
   text-decoration: none;
   transition: var(--transition);
+  position: relative;
+  width: fit-content;
 }
 
-.repo-link:hover {
-  gap: 0.6rem;
-  color: var(--accent-hover);
+.repo-link::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--accent);
+  transition: width 0.2s ease;
+}
+
+.repo-link:hover::after {
+  width: 100%;
 }
 
 .repo-topics {
   margin: 0.25rem 0 0.5rem;
   font-size: 0.8rem;
   color: var(--text-muted);
+  line-height: 1.6;
 }
 
 .loading-repos {
