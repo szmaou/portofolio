@@ -79,6 +79,24 @@
   <symbol id="repo-go" viewBox="0 0 24 24">
     <circle cx="12" cy="12" r="10" fill="#00ADD8"/>
   </symbol>
+  <symbol id="repo-kotlin" viewBox="0 0 24 24">
+    <circle cx="12" cy="12" r="10" fill="#7F52FF"/>
+  </symbol>
+  <symbol id="repo-qml" viewBox="0 0 24 24">
+    <circle cx="12" cy="12" r="10" fill="#41CD52"/>
+  </symbol>
+  <symbol id="repo-dart" viewBox="0 0 24 24">
+    <circle cx="12" cy="12" r="10" fill="#00B4AB"/>
+  </symbol>
+  <symbol id="repo-swift" viewBox="0 0 24 24">
+    <circle cx="12" cy="12" r="10" fill="#F05138"/>
+  </symbol>
+  <symbol id="repo-php" viewBox="0 0 24 24">
+    <circle cx="12" cy="12" r="10" fill="#777BB3"/>
+  </symbol>
+  <symbol id="repo-ruby" viewBox="0 0 24 24">
+    <circle cx="12" cy="12" r="10" fill="#CC342D"/>
+  </symbol>
   <symbol id="repo-default" viewBox="0 0 24 24">
     <circle cx="12" cy="12" r="10" fill="#888"/>
   </symbol>
