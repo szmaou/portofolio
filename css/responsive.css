@@ -164,10 +164,6 @@
     text-align: center;
   }
 
-  .setup-grid {
-    grid-template-columns: 1fr;
-  }
-
   .pagination-btn {
     padding: 0.5rem 1rem;
     font-size: 0.9rem;
@@ -189,10 +185,6 @@
 
   .about-text h3 {
     font-size: 1.5rem;
-  }
-
-  .setup-heading {
-    font-size: 1.2rem;
   }
 
   .img-wrapper {
