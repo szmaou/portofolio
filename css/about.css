@@ -23,18 +23,11 @@
 }
 
 .about-content {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 3rem;
-  align-items: start;
   position: relative;
   z-index: 1;
 }
 
-.about-stats-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.5rem;
+.about-stack-row {
   margin-top: 2rem;
 }
 
@@ -80,12 +73,6 @@
 }
 
 /* ─── About Side ─── */
-
-.about-side {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
 
 .about-image {
   display: flex;
@@ -200,5 +187,3 @@
   letter-spacing: 0.5px;
   margin-top: 0.15rem;
 }
-
-
