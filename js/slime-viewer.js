@@ -67,7 +67,7 @@ function initViewer() {
   rimLight.position.set(-3, 1, -2);
   scene.add(rimLight);
 
-  /* tilt group wraps the model so spin (child) and tilt (parent) don't fight */
+  /   * tilt group wraps the model for cursor-driven tilt */
   const tilt = new THREE.Group();
   scene.add(tilt);
   let slime = null;
@@ -130,11 +130,12 @@ function initViewer() {
       targetY = ((e.clientY - r.top) / r.height - 0.5) * 0.3; /* ±0.15 rad */
       if (!ticking) {
         ticking = true;
-        requestAnimationFrame(() => {
-          tilt.rotation.y = targetX;
-          tilt.rotation.x = -targetY;
-          ticking = false;
-        });
+         requestAnimationFrame(() => {
+           tilt.rotation.y = targetX;
+           tilt.rotation.x = -targetY;
+           render();
+           ticking = false;
+         });
       }
     });
 
@@ -143,20 +144,15 @@ function initViewer() {
       targetY = 0;
       if (!ticking) {
         ticking = true;
-        requestAnimationFrame(() => {
-          tilt.rotation.y = 0;
-          tilt.rotation.x = 0;
-          ticking = false;
-        });
+         requestAnimationFrame(() => {
+           tilt.rotation.y = 0;
+           tilt.rotation.x = 0;
+           render();
+           ticking = false;
+         });
       }
     });
   }
 
-  /* ─── Auto spin ─── */
-  function animate() {
-    if (slime) slime.rotation.y += 0.005;
-    render();
-    requestAnimationFrame(animate);
-  }
-  animate();
-}
+   /* No auto-rotation: the model is idle and moves only on cursor input. */
+ }

@@ -148,13 +148,19 @@
   justify-content: flex-start;
 }
 
-/* ─── Right: 3D avatar card ─── */
+/* ─── Right: avatar + slime + stats stack ─── */
 .hero-side {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.5rem;
-  transform-style: preserve-3d;
+  gap: 1.25rem;
+}
+
+/* Avatar floats above the slime pedestal; depth tuck never reaches the face */
+.hero-side .about-image {
+  position: relative;
+  z-index: 2;
+  padding-top: 0;
 }
 
 .hero-side .img-wrapper {
@@ -198,51 +204,37 @@
   .hero-bg::before,
   .hero-bg::after,
   .hero-side .img-wrapper,
-  .slime-zone {
+  .hero-text .slime-hero-top {
     animation: none;
   }
 
   #slime-mount canvas,
-  #slime-mount .about-image {
+  .slime-poster {
     transition: none;
   }
 }
 
-/* ─── Slime 3D mount ─── */
+/* ─── Slime 3D mount (hero top) ─── */
 
-.slime-zone {
+.hero-text .slime-hero-top {
   position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto 0.5rem;
   animation: floatAvatar 6s var(--ease-luxury) infinite;
-}
-
-/* Pedestal glow pooling beneath the mount */
-.slime-zone::before {
-  content: "";
-  position: absolute;
-  left: 50%;
-  bottom: -24px;
-  width: 70%;
-  height: 24px;
-  transform: translateX(-50%);
-  border-radius: 50%;
-  background: radial-gradient(ellipse at center, var(--aurora-1), transparent 72%);
-  filter: blur(10px);
-  pointer-events: none;
+  animation-delay: -2.5s;
 }
 
 #slime-mount {
   position: relative;
-  width: 260px;
-  height: 260px;
-  border-radius: 20px;
-  overflow: hidden;
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
-  backdrop-filter: blur(var(--glass-blur));
-  -webkit-backdrop-filter: blur(var(--glass-blur));
-  box-shadow: var(--depth-3d), var(--ring-highlight);
+  width: 220px;
+  height: 220px;
+  filter: drop-shadow(0 18px 28px rgba(0, 0, 0, 0.35))
+    drop-shadow(0 6px 14px rgba(var(--accent-rgb, 88, 166, 255), 0.18));
 }
 
+/* Canvas is a transparent floating layer — no box, no backdrop */
 #slime-mount canvas {
   position: absolute;
   inset: 0;
@@ -258,44 +250,26 @@
   opacity: 1;
 }
 
-/* Poster avatar centered inside the mount, shown only as fallback */
-#slime-mount .about-image {
+/* Static mascot placeholder, shown only until the 3D viewer loads */
+.slime-poster {
   position: absolute;
   inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 6%;
   opacity: 1;
-  pointer-events: auto;
+  pointer-events: none;
   transition: opacity var(--duration-slow) var(--ease-luxury);
 }
 
-#slime-mount .img-wrapper,
-#slime-mount .img-wrapper:hover {
-  animation: none;
-  transform: none;
-  box-shadow: none;
-}
-
-#slime-mount:not(.slime-fallback) .about-image {
+#slime-mount:not(.slime-fallback) .slime-poster {
   opacity: 0;
-  pointer-events: none;
-  transition: opacity var(--duration-fast) var(--ease-luxury);
 }
 
-@media (max-width: 768px) {
-  #slime-mount {
-    width: 200px;
-    height: 200px;
-    border-radius: 18px;
-  }
-}
+/* ## Slime hero top positioning ## */
 
-@media (max-width: 480px) {
-  #slime-mount {
-    width: 160px;
-    height: 160px;
-    border-radius: 16px;
-  }
+.hero-text .hero-title {
+  position: relative;
+  z-index: 1;
 }

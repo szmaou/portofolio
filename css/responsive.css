@@ -69,6 +69,16 @@
     perspective: none;
   }
 
+  /* Slime floating above the hero title — smaller on tablets */
+  .hero-text .slime-hero-top {
+    margin-bottom: 1rem;
+  }
+
+  #slime-mount {
+    width: 180px;
+    height: 180px;
+  }
+
   .hero-text {
     text-align: center;
   }
@@ -204,6 +214,12 @@
 }
 
 @media (max-width: 480px) {
+  /* Slime floating above the hero title — smallest on phones */
+  #slime-mount {
+    width: 150px;
+    height: 150px;
+  }
+
   .hero-title {
     font-size: 2.2rem;
   }
