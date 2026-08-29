@@ -319,6 +319,11 @@
     filter var(--duration-slow) var(--ease-luxury);
 }
 
+[data-theme="dark"] .connect-link img[src*="/github/"],
+[data-theme="dark"] .detail-item img[src*="/github/"] {
+  filter: brightness(0) invert(1) opacity(0.85);
+}
+
 .connect-link:hover {
   color: var(--accent-hover);
   background: var(--glass-bg);
