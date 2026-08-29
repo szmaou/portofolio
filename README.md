@@ -6,15 +6,15 @@ Personal portfolio website — vanilla HTML, CSS, and JavaScript.
 
 - Dark/light theme (system preference + localStorage)
 - Responsive layout (desktop & mobile)
-- GitHub API integration (repos, stats, sort & pagination)
+- GitHub API integration (repos, stats, sort & pagination, plus `CONTRIBUTED_REPOS` merge)
 - Scroll reveal animation
 - Hamburger menu
 - Hero parallax effect
-- Theme toggle with inline SVG sprite
-- Video hero (MP4/WebM loop) with slime poster fallback
-- 3D slime mascot (Three.js GLB viewer, lazy-loaded)
-- Particle network background (canvas)
-- Tech marquee (animating tech-stack rail)
+- Theme toggle (sun/moon sprite + location only)
+- Video hero (WebM 720p preferred, MP4 fallback) with particle network background (canvas, mouse grab/repel)
+- 3D slime mascot (Three.js GLB viewer, idle spin, transparent)
+- Tech marquee (animating SimpleIcons CDN rail, pause on hover)
+- SimpleIcons CDN for social & language icons (colored, dark-mode invert for GitHub/Opencode)
 - Contact details (WhatsApp, Email, Location)
 - Discord card & social links
 
