@@ -196,10 +196,12 @@
 }
 
 .marquee__track {
+  --marquee-gap: 2.5rem;
   display: flex;
-  gap: 2.5rem;
+  gap: var(--marquee-gap);
   flex-shrink: 0;
-  padding-right: 2.5rem;
+  width: max-content;
+  will-change: transform;
   animation: marquee 32s linear infinite;
 }
 
@@ -213,23 +215,20 @@
 }
 
 @keyframes marquee {
-  from {
-    transform: translateX(0);
-  }
   to {
-    transform: translateX(-50%);
+    transform: translateX(calc(-50% - (var(--marquee-gap) / 2)));
   }
 }
 
 .tech-icon {
   width: 34px;
   height: 34px;
-  background: var(--text);
-  -webkit-mask: var(--src) center / contain no-repeat;
-  mask: var(--src) center / contain no-repeat;
+  object-fit: contain;
+  display: block;
   flex: 0 0 auto;
   opacity: 0.9;
   transition: opacity var(--duration-fast) var(--ease-luxury);
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.35));
 }
 
 .tech-icon:hover {
