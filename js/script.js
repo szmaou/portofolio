@@ -247,6 +247,7 @@ document.addEventListener("DOMContentLoaded", () => {
       Python: { slug: 'python', color: '3776AB' },
       Java: { slug: 'openjdk', color: '5382A1' },
       Kotlin: { slug: 'kotlin', color: '7F52FF' },
+      Vue: { slug: 'vuedotjs', color: '4FC08D' },
       QML: { slug: 'qml', color: '41CD52' },
       Dart: { slug: 'dart', color: '0175C2' },
       Swift: { slug: 'swift', color: 'F05138' },
