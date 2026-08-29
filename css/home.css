@@ -197,7 +197,105 @@
 @media (prefers-reduced-motion: reduce) {
   .hero-bg::before,
   .hero-bg::after,
-  .hero-side .img-wrapper {
+  .hero-side .img-wrapper,
+  .slime-zone {
     animation: none;
+  }
+
+  #slime-mount canvas,
+  #slime-mount .about-image {
+    transition: none;
+  }
+}
+
+/* ─── Slime 3D mount ─── */
+
+.slime-zone {
+  position: relative;
+  animation: floatAvatar 6s var(--ease-luxury) infinite;
+}
+
+/* Pedestal glow pooling beneath the mount */
+.slime-zone::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -24px;
+  width: 70%;
+  height: 24px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, var(--aurora-1), transparent 72%);
+  filter: blur(10px);
+  pointer-events: none;
+}
+
+#slime-mount {
+  position: relative;
+  width: 260px;
+  height: 260px;
+  border-radius: 20px;
+  overflow: hidden;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  box-shadow: var(--depth-3d), var(--ring-highlight);
+}
+
+#slime-mount canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--duration-slow) var(--ease-luxury);
+}
+
+#slime-mount:not(.slime-fallback) canvas {
+  opacity: 1;
+}
+
+/* Poster avatar centered inside the mount, shown only as fallback */
+#slime-mount .about-image {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  opacity: 1;
+  pointer-events: auto;
+  transition: opacity var(--duration-slow) var(--ease-luxury);
+}
+
+#slime-mount .img-wrapper,
+#slime-mount .img-wrapper:hover {
+  animation: none;
+  transform: none;
+  box-shadow: none;
+}
+
+#slime-mount:not(.slime-fallback) .about-image {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--duration-fast) var(--ease-luxury);
+}
+
+@media (max-width: 768px) {
+  #slime-mount {
+    width: 200px;
+    height: 200px;
+    border-radius: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  #slime-mount {
+    width: 160px;
+    height: 160px;
+    border-radius: 16px;
   }
 }
