@@ -118,7 +118,7 @@ function initViewer() {
     camera.aspect = w / h;
     camera.updateProjectionMatrix();
     render();
-  });
+  }, { passive: true });
 
   /* ─── Reduced motion: single static frame, no spin ─── */
   if (reduceMotion) {

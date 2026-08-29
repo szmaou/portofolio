@@ -264,7 +264,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  window.addEventListener("scroll", updateActiveLink);
+  window.addEventListener("scroll", updateActiveLink, { passive: true });
   updateActiveLink();
 
   /* ─── Scroll Reveal ─── */
@@ -309,7 +309,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         parallaxTick = false;
       });
-    });
+    }, { passive: true });
   }
 
   /* Mouse tilt (desktop only) */

@@ -1,3 +1,40 @@
+/* ─── Tablet (≤1024px) ─── */
+@media (max-width: 1024px) {
+  .section {
+    min-height: auto;
+  }
+
+  .hero-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+
+  #slime-mount {
+    width: 180px;
+    height: 180px;
+  }
+
+  .hero-side .about-side-block {
+    max-width: 340px;
+  }
+
+  .hero-side .img-wrapper {
+    width: 230px;
+    height: 230px;
+    animation: none;
+  }
+
+  .github-stats {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .contact-content {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
 @media (max-width: 768px) {
   .navbar {
     padding: 0.8rem 1.25rem;
@@ -85,7 +122,7 @@
   }
 
   .hero-title {
-    font-size: 2.8rem;
+    font-size: clamp(2.2rem, 5vw, 3.8rem);
   }
 
   .hero-tagline {
@@ -153,6 +190,8 @@
 
   .github-stats {
     gap: 0.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
   }
 
   .github-stat {
@@ -178,10 +217,10 @@
 
   .section {
     padding: 4rem 1.25rem;
+    min-height: auto;
   }
 
   .section-title {
-    font-size: 1.65rem;
     margin-bottom: 2rem;
   }
 
@@ -230,24 +269,12 @@
     height: 150px;
   }
 
-  .hero-title {
-    font-size: 2.2rem;
-  }
-
   .hero-tagline {
     font-size: 1rem;
   }
 
   .hero-grid {
     gap: 2rem;
-  }
-
-  .section-title {
-    font-size: 1.35rem;
-  }
-
-  .about-text h3 {
-    font-size: 1.5rem;
   }
 
   .about-motto {

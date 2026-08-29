@@ -78,7 +78,10 @@
   background: none;
   border: none;
   cursor: pointer;
-  padding: 4px;
+  padding: 10px;
+  min-width: 44px;
+  min-height: 44px;
+  justify-content: center;
 }
 
 .hamburger span {
@@ -108,8 +111,8 @@
   background: var(--glass-bg);
   border: 1px solid var(--glass-border);
   border-radius: 10px;
-  width: 30px;
-  height: 30px;
+  width: 44px;
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;

@@ -228,6 +228,7 @@
 
 .sort-btn {
   padding: 0.35rem 0.9rem;
+  min-height: 44px;
   border: none;
   border-radius: calc(var(--radius-sm) - 4px);
   background: transparent;
@@ -269,6 +270,10 @@
 
 .pagination-btn {
   padding: 0.4rem 1rem;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-sm);
   background: var(--glass-bg);

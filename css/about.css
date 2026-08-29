@@ -52,7 +52,7 @@
 }
 
 .about-text h3 {
-  font-size: 2rem;
+  font-size: clamp(1.5rem, 3vw, 2rem);
   font-weight: 700;
   margin-bottom: 1.25rem;
   line-height: 1.2;
@@ -191,8 +191,9 @@
   overflow: hidden;
   display: flex;
   width: 100%;
-  -webkit-mask: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
-  mask: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  contain: layout;
+  -webkit-mask: linear-gradient(90deg, transparent, #000 8%, #000 92%, #000 92%, transparent);
+  mask: linear-gradient(90deg, transparent, #000 8%, #000 92%, #000 92%, transparent);
 }
 
 .marquee__track {

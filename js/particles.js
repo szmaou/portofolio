@@ -11,7 +11,8 @@
 
   /* ─── Config ─── */
   const LINK = 140;
-  const COUNT = Math.min(80, Math.floor(window.innerWidth / 16));
+  const MAX_COUNT = window.innerWidth < 768 ? 40 : 80;
+  const COUNT = Math.min(MAX_COUNT, Math.floor(window.innerWidth / 16));
   const DOT_RADIUS = 1.6;
   const SPEED = 0.4;
   const DAMPING = 0.98;
@@ -25,6 +26,7 @@
   let width = 0;
   let height = 0;
   let canvasRect = { left: 0, top: 0 };
+  let frameCount = 0;
 
   function getAccent() {
     return (
@@ -73,6 +75,7 @@
 
   /* ─── Animation frame ─── */
   function step() {
+    frameCount++;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     const color = getAccent();
 
@@ -106,25 +109,27 @@
       }
     }
 
-    /* lines: opacity 1 - d/LINK */
-    ctx.strokeStyle = color;
-    ctx.lineWidth = 1 / dpr;
-    for (let i = 0; i < particles.length; i++) {
-      const a = particles[i];
-      for (let j = i + 1; j < particles.length; j++) {
-        const b = particles[j];
-        const dx = a.x - b.x;
-        const dy = a.y - b.y;
-        const d = Math.hypot(dx, dy);
-        if (d > LINK) continue;
-        ctx.globalAlpha = 1 - d / LINK;
-        ctx.beginPath();
-        ctx.moveTo(a.x, a.y);
-        ctx.lineTo(b.x, b.y);
-        ctx.stroke();
+    /* lines: opacity 1 - d/LINK — O(n²), throttled by DPR */
+    if (frameCount % Math.ceil(dpr) === 0) {
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 1 / dpr;
+      for (let i = 0; i < particles.length; i++) {
+        const a = particles[i];
+        for (let j = i + 1; j < particles.length; j++) {
+          const b = particles[j];
+          const dx = a.x - b.x;
+          const dy = a.y - b.y;
+          const d = Math.hypot(dx, dy);
+          if (d > LINK) continue;
+          ctx.globalAlpha = 1 - d / LINK;
+          ctx.beginPath();
+          ctx.moveTo(a.x, a.y);
+          ctx.lineTo(b.x, b.y);
+          ctx.stroke();
+        }
       }
+      ctx.globalAlpha = 1;
     }
-    ctx.globalAlpha = 1;
 
     /* dots */
     ctx.fillStyle = color;
@@ -168,12 +173,12 @@
         x: e.clientX - canvasRect.left,
         y: e.clientY - canvasRect.top,
       };
-    });
+    }, { passive: true });
     root.addEventListener("mouseleave", () => {
       mouse = null;
-    });
+    }, { passive: true });
 
-    window.addEventListener("resize", onResize);
+    window.addEventListener("resize", onResize, { passive: true });
 
     if (prefersReduced) {
       drawStatic();

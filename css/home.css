@@ -130,7 +130,7 @@
 }
 
 .hero-title {
-  font-size: 3.8rem;
+  font-size: clamp(2.2rem, 5vw, 3.8rem);
   font-weight: 800;
   letter-spacing: -1px;
   line-height: 1.1;
@@ -141,7 +141,7 @@
   transition:
     transform var(--duration-slow) var(--ease-luxury),
     filter var(--duration-slow) var(--ease-luxury);
-  will-change: transform;
+  will-change: transform, filter;
 }
 
 .hero-title:hover {
