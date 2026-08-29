@@ -54,7 +54,7 @@ function initViewer() {
     0.1,
     100,
   );
-  camera.position.set(0, 0.4, 4.5);
+  camera.position.set(0, 0.4, 5.8);
 
   /* ─── Lighting: soft hemisphere + key + colored rim ─── */
   const hemi = new THREE.HemisphereLight(0xffffff, 1.2);

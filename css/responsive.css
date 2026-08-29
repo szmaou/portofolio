@@ -10,9 +10,9 @@
   }
 
   #slime-mount {
-    width: 260px;
+    width: 220px;
     height: 200px;
-    margin-left: -40px;
+    margin-left: 0;
   }
 
   .hero-side .about-side-block {
