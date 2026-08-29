@@ -236,6 +236,11 @@
   opacity: 1;
 }
 
+[data-theme="dark"] .tech-icon[src*="/github/"],
+[data-theme="dark"] .tech-icon[src*="/opencode"] {
+  filter: brightness(0) invert(1);
+}
+
 .github-stats {
   display: flex;
   gap: 0.75rem;
