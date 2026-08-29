@@ -185,29 +185,41 @@ document.addEventListener("DOMContentLoaded", () => {
     prevPerPage = newPerPage;
   });
 
+  function escapeHtmlAttr(str) {
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/"/g, '&quot;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+  }
+
   function getRepoIcon(language) {
     const iconMap = {
-      HTML: 'html',
-      CSS: 'css',
-      JavaScript: 'javascript',
-      TypeScript: 'typescript',
-      Python: 'python',
-      Java: 'java',
-      Kotlin: 'kotlin',
-      QML: 'qml',
-      Dart: 'dart',
-      Swift: 'swift',
-      PHP: 'php',
-      Ruby: 'ruby',
-      Shell: 'shell',
-      Lua: 'lua',
-      C: 'c',
-      'C++': 'cpp',
-      Rust: 'rust',
-      Go: 'go',
+      HTML: { slug: 'html5', color: 'E34F26' },
+      CSS: { slug: 'css', color: '1572B6' },
+      JavaScript: { slug: 'javascript', color: 'F7DF1E' },
+      TypeScript: { slug: 'typescript', color: '3178C6' },
+      Python: { slug: 'python', color: '3776AB' },
+      Java: { slug: 'openjdk', color: '5382A1' },
+      Kotlin: { slug: 'kotlin', color: '0095D5' },
+      QML: { slug: 'qml', color: '41CD52' },
+      Dart: { slug: 'dart', color: '0175C2' },
+      Swift: { slug: 'swift', color: 'F05138' },
+      PHP: { slug: 'php', color: '777BB4' },
+      Ruby: { slug: 'ruby', color: 'CC342D' },
+      Shell: { slug: 'gnubash', color: '4EAA25' },
+      Lua: { slug: 'lua', color: '000080' },
+      C: { slug: 'c', color: 'A8B9CC' },
+      'C++': { slug: 'cplusplus', color: '00599C' },
+      Rust: { slug: 'rust', color: 'DEA584' },
+      Go: { slug: 'go', color: '00ADD8' },
     };
-    const key = iconMap[language] || 'default';
-    return `<svg width="22" height="22"><use href="img/icons.svg#repo-${key}"/></svg>`;
+
+    const entry = iconMap[language];
+    const slug = entry ? entry.slug : 'github';
+    const color = entry ? entry.color : '181717';
+    const label = language || 'Unknown';
+    return `<img class="repo-icon" src="https://cdn.simpleicons.org/${slug}/${color}" alt="${escapeHtmlAttr(label)}" width="22" height="22">`;
   }
 
   document.querySelectorAll(".sort-btn").forEach((btn) => {

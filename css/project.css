@@ -78,12 +78,20 @@
 }
 
 .card-icon {
-  font-size: 1.75rem;
   display: inline-flex;
+  align-items: center;
+  justify-content: center;
   filter: drop-shadow(0 0 8px rgba(var(--accent-rgb), 0.35));
   transition:
     transform var(--duration-slow) var(--ease-luxury),
     filter var(--duration-slow) var(--ease-luxury);
+}
+
+.card-icon img.repo-icon {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+  display: block;
 }
 
 .project-card:hover .card-icon {

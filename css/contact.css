@@ -148,19 +148,19 @@
   transform: translateX(4px);
 }
 
-.detail-item svg {
+.detail-item img {
   width: 18px;
   height: 18px;
   flex-shrink: 0;
-  color: var(--accent);
+  object-fit: contain;
   transition:
     transform var(--duration-slow) var(--ease-luxury),
     filter var(--duration-slow) var(--ease-luxury);
 }
 
-.detail-item:hover svg {
+.detail-item:hover img {
   transform: scale(1.1);
-  filter: drop-shadow(0 0 8px rgba(var(--accent-rgb), 0.45));
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.2));
 }
 
 .detail-link {
@@ -210,8 +210,7 @@
   gap: 0.75rem;
 }
 
-.discord-card-content svg {
-  color: var(--accent-hover);
+.discord-card-content img {
   filter: drop-shadow(0 0 10px rgba(var(--accent-rgb), 0.5));
   flex-shrink: 0;
 }
@@ -304,8 +303,10 @@
     box-shadow var(--duration-slow) var(--ease-luxury);
 }
 
-.connect-link svg {
-  color: var(--accent);
+.connect-link img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
   transition:
     transform var(--duration-slow) var(--ease-luxury),
     filter var(--duration-slow) var(--ease-luxury);
@@ -319,7 +320,7 @@
   box-shadow: var(--shadow-sm), var(--glow-accent);
 }
 
-.connect-link:hover svg {
+.connect-link:hover img {
   transform: scale(1.12);
   filter: drop-shadow(0 0 8px rgba(var(--accent-rgb), 0.45));
 }
