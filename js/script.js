@@ -36,6 +36,8 @@ document.addEventListener("DOMContentLoaded", () => {
   /* ─── GitHub Stats ─── */
 
   const GITHUB_USER = "szmaou";
+  /* contributed repos displayed alongside owned ones */
+  const CONTRIBUTED_REPOS = ["terarush/ping-uptime", "cnp-plus/pplg"];
 
   async function fetchGitHubStats() {
     const reposEl = document.getElementById("gh-repos");
@@ -71,21 +73,64 @@ document.addEventListener("DOMContentLoaded", () => {
     return window.innerWidth <= 768 ? 3 : 6;
   }
 
+  async function fetchContributedRepos() {
+    const results = await Promise.allSettled(
+      CONTRIBUTED_REPOS.map((fullName) =>
+        fetch(`https://api.github.com/repos/${fullName}`).then((res) => {
+          if (!res.ok) throw new Error(`Failed to fetch ${fullName}`);
+          return res.json();
+        }),
+      ),
+    );
+    const repos = [];
+    results.forEach((result) => {
+      if (result.status === "fulfilled") {
+        const r = result.value;
+        if (!r.fork && r.description) repos.push(r);
+      } else {
+        console.warn("Contributed repo fetch failed:", result.reason);
+      }
+    });
+    return repos;
+  }
+
   async function fetchGitHubRepos() {
     const grid = document.getElementById("project-grid");
     try {
-      const res = await fetch(
-        `https://api.github.com/users/${GITHUB_USER}/repos?sort=updated&per_page=50`,
-      );
-      if (!res.ok) throw new Error("GitHub API error");
-      const repos = await res.json();
-      allRepos = repos.filter((r) => !r.fork && r.description);
-      currentPage = 1;
-      renderRepos();
-    } catch {
-      grid.innerHTML =
-        '<p class="loading-repos">Gagal memuat repositori. Coba reload.</p>';
-      document.getElementById("pagination").style.display = "none";
+      try {
+        const res = await fetch(
+          `https://api.github.com/users/${GITHUB_USER}/repos?sort=updated&per_page=50`,
+        );
+        if (!res.ok) throw new Error("GitHub API error");
+        const repos = await res.json();
+        allRepos = repos.filter((r) => !r.fork && r.description);
+      } catch {
+        /* owned fetch failed; contributed may still load below */
+      }
+
+      try {
+        const contributed = await fetchContributedRepos();
+        contributed.forEach((r) => {
+          if (
+            !allRepos.some(
+              (x) => x.id === r.id || x.full_name === r.full_name,
+            )
+          ) {
+            allRepos.push(r);
+          }
+        });
+      } catch (e) {
+        console.warn("Contributed repos failed:", e);
+      }
+
+      if (allRepos.length === 0) {
+        grid.innerHTML =
+          '<p class="loading-repos">Gagal memuat repositori. Coba reload.</p>';
+        document.getElementById("pagination").style.display = "none";
+      } else {
+        currentPage = 1;
+        renderRepos();
+      }
     } finally {
       loaderDone();
     }
