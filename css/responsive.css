@@ -71,7 +71,8 @@
 
   /* Slime floating above the hero title — smaller on tablets */
   .hero-text .slime-hero-top {
-    margin-bottom: 1rem;
+    justify-content: center;
+    margin: 0 auto 1rem;
   }
 
   #slime-mount {

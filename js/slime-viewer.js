@@ -11,7 +11,6 @@ const CANVAS = document.getElementById("slime-canvas");
 const reduceMotion = window.matchMedia(
   "(prefers-reduced-motion: reduce)",
 ).matches;
-const finePointer = window.matchMedia("(pointer: fine)").matches;
 
 /* ─── WebGL guard ─── */
 function webglAvailable() {
@@ -67,9 +66,9 @@ function initViewer() {
   rimLight.position.set(-3, 1, -2);
   scene.add(rimLight);
 
-  /   * tilt group wraps the model for cursor-driven tilt */
-  const tilt = new THREE.Group();
-  scene.add(tilt);
+  /* ─── Model container — anchored at the pedestal origin ─── */
+  const modelGroup = new THREE.Group();
+  scene.add(modelGroup);
   let slime = null;
 
   const loader = new GLTFLoader();
@@ -82,7 +81,7 @@ function initViewer() {
       box.getCenter(center);
       root.position.sub(center); /* center model on the pedestal origin */
 
-      tilt.add(root);
+      modelGroup.add(root);
       slime = root;
 
       /* Reveal the 3D canvas and hide the fallback poster. */
@@ -101,6 +100,15 @@ function initViewer() {
     renderer.render(scene, camera);
   }
 
+  /* ─── Idle auto-rotation (no cursor interaction) ─── */
+  function animate() {
+    if (slime) {
+      slime.rotation.y += 0.005;
+      render();
+    }
+    requestAnimationFrame(animate);
+  }
+
   /* ─── Resize ─── */
   window.addEventListener("resize", () => {
     const w = MOUNT.clientWidth;
@@ -112,47 +120,11 @@ function initViewer() {
     render();
   });
 
-  /* ─── Reduced motion: single static frame, no spin, no tilt ─── */
+  /* ─── Reduced motion: single static frame, no spin ─── */
   if (reduceMotion) {
     render();
     return;
   }
 
-  /* ─── Mouse tilt (fine pointer, rAF throttled, subtle ±0.15 rad) ─── */
-  if (finePointer) {
-    let ticking = false;
-    let targetX = 0;
-    let targetY = 0;
-
-    MOUNT.addEventListener("mousemove", (e) => {
-      const r = MOUNT.getBoundingClientRect();
-      targetX = ((e.clientX - r.left) / r.width - 0.5) * 0.3; /* ±0.15 rad */
-      targetY = ((e.clientY - r.top) / r.height - 0.5) * 0.3; /* ±0.15 rad */
-      if (!ticking) {
-        ticking = true;
-         requestAnimationFrame(() => {
-           tilt.rotation.y = targetX;
-           tilt.rotation.x = -targetY;
-           render();
-           ticking = false;
-         });
-      }
-    });
-
-    MOUNT.addEventListener("mouseleave", () => {
-      targetX = 0;
-      targetY = 0;
-      if (!ticking) {
-        ticking = true;
-         requestAnimationFrame(() => {
-           tilt.rotation.y = 0;
-           tilt.rotation.x = 0;
-           render();
-           ticking = false;
-         });
-      }
-    });
-  }
-
-   /* No auto-rotation: the model is idle and moves only on cursor input. */
- }
+  animate();
+}
