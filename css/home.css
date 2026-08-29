@@ -72,7 +72,7 @@
   background: var(--mesh-glow);
 }
 
-.hero-bg img {
+.hero-bg video {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -81,7 +81,7 @@
   mix-blend-mode: screen;
 }
 
-[data-theme="light"] .hero-bg img {
+[data-theme="light"] .hero-bg video {
   opacity: 0.2;
   mix-blend-mode: multiply;
 }
@@ -245,6 +245,10 @@
   .hero-side .img-wrapper,
   .hero-text .slime-hero-top {
     animation: none;
+  }
+
+  .hero-bg video {
+    display: none;
   }
 
   #slime-mount canvas,
