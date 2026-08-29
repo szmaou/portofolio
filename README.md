@@ -2,8 +2,6 @@
 
 Personal portfolio website — vanilla HTML, CSS, and JavaScript.
 
-**Live:** https://szmaou.github.io/portofolio/
-
 ## Features
 
 - Dark/light theme (system preference + localStorage)
@@ -48,7 +46,3 @@ Personal portfolio website — vanilla HTML, CSS, and JavaScript.
 ./run.sh --python 3000     # custom port
 ./run.sh --npx
 ```
-
-## License
-
-MIT

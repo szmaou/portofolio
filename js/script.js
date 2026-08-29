@@ -145,6 +145,9 @@ document.addEventListener("DOMContentLoaded", () => {
       })
       .join("");
 
+    const cards = grid.querySelectorAll(".project-card");
+    cards.forEach((card, idx) => card.style.setProperty("--i", idx));
+
     updatePagination(totalPages);
   }
 
@@ -288,16 +291,74 @@ document.addEventListener("DOMContentLoaded", () => {
     revealElements.forEach((el) => el.classList.remove("section-hidden"));
   }
 
-  /* ─── Parallax Hero ─── */
+  /* ─── Motion ─── */
 
   const hero = document.querySelector(".hero-content");
 
-  window.addEventListener("scroll", () => {
-    const scrolled = window.scrollY;
-    if (scrolled < window.innerHeight) {
-      hero.style.transform = `translateY(${scrolled * 0.15}px)`;
-      hero.style.opacity = 1 - scrolled / (window.innerHeight * 0.8);
+  /* Parallax (rAF throttled) */
+  if (hero) {
+    let parallaxTick = false;
+    window.addEventListener("scroll", () => {
+      if (parallaxTick) return;
+      parallaxTick = true;
+      requestAnimationFrame(() => {
+        const scrolled = window.scrollY;
+        if (scrolled < window.innerHeight) {
+          hero.style.transform = `translateY(${scrolled * 0.15}px)`;
+          hero.style.opacity = 1 - scrolled / (window.innerHeight * 0.8);
+        }
+        parallaxTick = false;
+      });
+    });
+  }
+
+  /* Mouse tilt (desktop only) */
+  const canTilt =
+    window.matchMedia("(pointer: fine)").matches &&
+    !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if (canTilt) {
+    document.querySelectorAll(".project-card").forEach((card) => {
+      let ticking = false;
+      card.addEventListener("mousemove", (e) => {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => {
+          const rect = card.getBoundingClientRect();
+          const centerX = rect.left + rect.width / 2;
+          const centerY = rect.top + rect.height / 2;
+          const rotateY = (e.clientX - centerX) / 12;
+          const rotateX = (centerY - e.clientY) / 14;
+          card.style.transform = `perspective(1000px) rotateY(${rotateY}deg) rotateX(${rotateX}deg) translateY(-4px)`;
+          ticking = false;
+        });
+      });
+      card.addEventListener("mouseleave", () => {
+        card.style.transform = "";
+      });
+    });
+
+    /* Hero avatar tilt (lighter) */
+    const avatar = document.querySelector(".hero-side .img-wrapper");
+    if (avatar) {
+      let ticking = false;
+      avatar.addEventListener("mousemove", (e) => {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => {
+          const rect = avatar.getBoundingClientRect();
+          const centerX = rect.left + rect.width / 2;
+          const centerY = rect.top + rect.height / 2;
+          const rotateY = (e.clientX - centerX) / 25;
+          const rotateX = (centerY - e.clientY) / 30;
+          avatar.style.transform = `perspective(1000px) rotateY(${rotateY}deg) rotateX(${rotateX}deg) scale(1.05)`;
+          ticking = false;
+        });
+      });
+      avatar.addEventListener("mouseleave", () => {
+        avatar.style.transform = "";
+      });
     }
-  });
+  }
 
 });

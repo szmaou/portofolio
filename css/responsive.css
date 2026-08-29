@@ -65,7 +65,8 @@
 
   .hero-grid {
     grid-template-columns: 1fr;
-    gap: 2rem;
+    gap: 2.5rem;
+    perspective: none;
   }
 
   .hero-text {
@@ -78,6 +79,8 @@
 
   .hero-tagline {
     font-size: 1.1rem;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .hero-cta {
@@ -88,8 +91,34 @@
     opacity: 0.08;
   }
 
+  .hero-bg::before {
+    width: 420px;
+    height: 420px;
+    top: -10%;
+    right: -20%;
+  }
+
+  .hero-bg::after {
+    width: 360px;
+    height: 360px;
+    bottom: -18%;
+    left: -15%;
+  }
+
+  .hero-side .img-wrapper {
+    animation: none;
+  }
+
+  .hero-side .about-side-block {
+    max-width: 320px;
+  }
+
   .about-text p {
     font-size: 0.95rem;
+  }
+
+  .about-motto {
+    width: 100%;
   }
 
   .img-wrapper {
@@ -119,6 +148,10 @@
     gap: 1.5rem;
   }
 
+  .contact-left {
+    padding: 1.5rem;
+  }
+
   .contact-info > .connect-section {
     order: -1;
   }
@@ -134,15 +167,28 @@
 
   .project-grid {
     grid-template-columns: 1fr;
+    perspective: none;
   }
 
   .project-card {
     padding: 1.25rem;
   }
 
+  .project-card:hover {
+    transform: translateY(-6px);
+  }
+
   .project-header {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .sort-tabs {
+    width: 100%;
+  }
+
+  .sort-btn {
+    flex: 1;
   }
 
   .btn {
@@ -166,12 +212,20 @@
     font-size: 1rem;
   }
 
+  .hero-grid {
+    gap: 2rem;
+  }
+
   .section-title {
     font-size: 1.35rem;
   }
 
   .about-text h3 {
     font-size: 1.5rem;
+  }
+
+  .about-motto {
+    font-size: 0.95rem;
   }
 
   .img-wrapper {
@@ -182,6 +236,20 @@
   .github-stats {
     flex-wrap: wrap;
     justify-content: center;
+  }
+
+  .discord-card {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+  }
+
+  .discord-card-content {
+    justify-content: center;
+  }
+
+  .discord-card-btn {
+    text-align: center;
   }
 
   .section {

@@ -9,10 +9,11 @@
   justify-content: space-between;
   align-items: center;
   padding: 0.8rem 2rem;
-  background: var(--navbar-bg);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--border);
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border-bottom: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-sm);
   z-index: 1000;
   height: 64px;
 }
@@ -21,6 +22,15 @@
   font-size: 1.5rem;
   font-weight: 700;
   letter-spacing: -0.5px;
+  color: var(--text);
+  transition:
+    color var(--duration-fast) var(--ease-luxury),
+    text-shadow var(--duration-fast) var(--ease-luxury);
+}
+
+.nav-brand a:hover {
+  color: var(--accent);
+  text-shadow: var(--glow-accent);
 }
 
 .nav-menu ul {
@@ -33,7 +43,9 @@
   padding: 0.4rem 0;
   position: relative;
   color: var(--text-muted);
-  transition: color var(--transition);
+  transition:
+    color var(--duration-fast) var(--ease-luxury),
+    text-shadow var(--duration-fast) var(--ease-luxury);
 }
 
 .nav-link::after {
@@ -43,13 +55,16 @@
   left: 0;
   width: 0;
   height: 2px;
-  background: var(--accent);
-  transition: width var(--transition);
+  background: var(--gradient-accent);
+  box-shadow: var(--glow-accent);
+  border-radius: 2px;
+  transition: width var(--duration-slow) var(--ease-luxury);
 }
 
 .nav-link:hover,
 .nav-link.active {
   color: var(--text);
+  text-shadow: var(--glow-accent);
 }
 
 .nav-link.active::after {
@@ -90,30 +105,49 @@
 /* ─── Theme Toggle ─── */
 
 .theme-toggle {
-  background: none;
-  border: 1px solid var(--border);
-  border-radius: 50%;
-  width: 28px;
-  height: 28px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 10px;
+  width: 30px;
+  height: 30px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: var(--transition);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  box-shadow: var(--shadow-xs);
   margin-right: 0.75rem;
   flex-shrink: 0;
   color: var(--text-muted);
+  transition:
+    transform var(--duration-fast) var(--ease-luxury),
+    border-color var(--duration-fast) var(--ease-luxury),
+    color var(--duration-fast) var(--ease-luxury),
+    box-shadow var(--duration-fast) var(--ease-luxury);
 }
 
 .theme-toggle:hover {
   border-color: var(--accent);
   color: var(--text);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-xs), var(--shadow-glow);
+}
+
+.theme-toggle:active {
+  transform: scale(0.92);
+  box-shadow: var(--shadow-inset);
+}
+
+.theme-toggle:hover .toggle-icon {
+  transform: rotate(20deg);
 }
 
 .toggle-icon {
   width: 14px;
   height: 14px;
   display: block;
+  transition: transform var(--duration-slow) var(--ease-luxury);
 }
 
 [data-theme="light"] .theme-toggle .icon-moon {
@@ -128,10 +162,11 @@
 
 .footer {
   text-align: center;
-  padding: 1.25rem;
+  padding: 1.5rem 1.25rem;
   color: var(--text-muted);
   font-size: 0.85rem;
-  border-top: 1px solid var(--border);
+  letter-spacing: 0.02em;
+  border-top: 1px solid var(--glass-border);
 }
 
 /* ─── Scroll Reveal ─── */
@@ -140,8 +175,8 @@
   opacity: 0;
   transform: translateY(40px);
   transition:
-    opacity 0.7s ease,
-    transform 0.7s ease;
+    opacity var(--duration-slow) var(--ease-luxury),
+    transform var(--duration-slow) var(--ease-luxury);
 }
 
 .section-visible {
