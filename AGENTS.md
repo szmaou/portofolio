@@ -13,15 +13,15 @@ Docker maps `80:80` regardless of `PORT` arg — `PORT` only affects the echo me
 
 ## Structure
 - `index.html` — single page, 4 sections: `#home` (hero), `#about`, `#project`, `#contact`. No templating.
-- `css/` — load order in `index.html` matters: `variables.css` → `base.css` → `navbar.css` → `home.css` → `about.css` → `project.css` → `contact.css` → `responsive.css`. `variables.css` defines all CSS custom properties (`--bg`, `--text`, `--accent`, etc.) and `[data-theme="light"]` overrides.
-- `js/script.js` — single `DOMContentLoaded` entry point, no modules.
-- `icons.svg` — SVG sprite in `assets/` (sun/moon/location only); GitHub & repo-language icons use the simpleicons CDN.
+- `css/` — load order in `index.html` matters: `variables.css` → `base.css` → `navbar.css` → `home.css` → `about.css` → `project.css` → `contact.css` → `responsive.css`. `variables.css` defines all CSS custom properties (`--bg`, `--text`, `--accent`, `--accent-rgb`, etc.) and `[data-theme="light"]` overrides.
+- `js/` — `script.js` (main `DOMContentLoaded`, no modules), `slime-viewer.js` (Three.js `rimuru_slime.glb` via importmap `three@0.185.1`, idle spin), `particles.js` (vanilla canvas, mouse grab/repel). Both lazy via `requestIdleCallback`, never touch `loaderDone`.
+- `assets/` — `icons.svg` (sun/moon/location only, 3 symbols), `slime.webp` (poster), `rimuru.webp`, `saber.mp4` + `saber-720p.webm` (WebM preferred), `rimuru_slime.glb` (2.3M). Hero video + slime both use `<video>`/`<canvas>` with transparent bg.
 - No `.github/`, no CI, no `opencode.json`.
 
 ## CSS Conventions
 - Theme via `document.documentElement.setAttribute("data-theme", ...)` + `localStorage.getItem("theme")` key `"theme"`; fallback `prefers-color-scheme: light`.
 - Hero parallax targets `.hero-content` (`translateY` + opacity on scroll) — keep that element intact or parallax breaks.
-- Responsive breakpoints: `768px` and `480px` only, all in `css/responsive.css`.
+- Responsive breakpoints: `1024px` (tablet), `768px` and `480px`, all in `css/responsive.css`. Fluid typography via `clamp()`, touch targets ≥44px.
 - Hero layout: `.hero-grid` (2-col desktop, 1-col mobile) with `.hero-text` left / `.hero-side` right. GitHub avatar `.img-wrapper` + stats use classes from `about.css` (`.about-side-block`, `.github-stats`) shared across hero — changing those affects both places.
 
 ## JS Gotchas
@@ -30,6 +30,8 @@ Docker maps `80:80` regardless of `PORT` arg — `PORT` only affects the echo me
 - Stat IDs `gh-repos` / `gh-followers` / `gh-following` and `#github-stats` — JS selects by ID, don't rename without updating `script.js`.
 - Repo pagination: `getPerPage()` = 3 on mobile (≤768px), 6 on desktop; resize resets to page 1 when crossing breakpoint.
 - Active nav uses `offsetTop - 120` threshold + `scroll-padding-top: 70px`.
+- `js/slime-viewer.js` and `js/particles.js` are lazy via `requestIdleCallback` and must never call `loaderDone()` — loader stays gated on the 2 GitHub fetches.
+- Contributed repos: `CONTRIBUTED_REPOS = ["terarush/ping-uptime","cnp-plus/pplg"]` merged into `allRepos` via `Promise.allSettled`, deduplicated by `id/full_name`, filtered `!fork && description`.
 
 ## Editing Rules
 - Keep HTML well-formed; verify all referenced CSS classes exist across the 8 CSS files after moves.
