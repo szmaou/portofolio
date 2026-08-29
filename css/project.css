@@ -94,6 +94,14 @@
   display: block;
 }
 
+[data-theme="dark"] .card-icon img.repo-icon[src*="/github/"] {
+  filter: brightness(0) invert(1);
+}
+
+[data-theme="dark"] .repo-link img {
+  filter: brightness(0) invert(1);
+}
+
 .project-card:hover .card-icon {
   transform: scale(1.08);
   filter: drop-shadow(0 0 14px rgba(var(--accent-rgb), 0.5));
