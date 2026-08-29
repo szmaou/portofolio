@@ -26,10 +26,14 @@
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 1.5rem;
   perspective: 1200px;
+  align-items: stretch;
 }
 
 .project-card {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   background: var(--glass-bg);
   border: 1px solid var(--glass-border);
   border-radius: var(--radius);
@@ -92,11 +96,11 @@
   font-weight: 600;
 }
 
-.project-card p {
+.project-card > p:not(.repo-topics) {
   color: var(--text-muted);
   font-size: 0.95rem;
   line-height: 1.7;
-  margin-bottom: 1.25rem;
+  flex: 1;
 }
 
 .repo-stars {
@@ -123,7 +127,8 @@
   border-radius: 20px;
   font-size: 0.78rem;
   font-weight: 500;
-  line-height: 1.5;
+  line-height: 1.4;
+  white-space: nowrap;
   color: var(--text-muted);
   background: rgba(var(--accent-rgb), 0.06);
   transition:
@@ -145,11 +150,21 @@
   border-top: 1px solid var(--glass-border);
 }
 
+.repo-topics {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: 0.5rem 0.45rem;
+  margin: 1rem 0 0.25rem;
+  line-height: 1.4;
+}
+
 .repo-link {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  margin-top: 0.75rem;
+  margin-top: auto;
+  padding-top: 0.75rem;
   font-size: 0.9rem;
   font-weight: 500;
   color: var(--accent);
