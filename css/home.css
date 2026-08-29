@@ -267,8 +267,10 @@
 
 #slime-mount {
   position: relative;
-  width: 220px;
+  width: 320px;
   height: 220px;
+  margin-left: -50px;
+  overflow: visible;
   filter: drop-shadow(0 18px 28px rgba(0, 0, 0, 0.35))
     drop-shadow(0 6px 14px rgba(var(--accent-rgb, 88, 166, 255), 0.18));
 }

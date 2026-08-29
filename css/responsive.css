@@ -10,8 +10,9 @@
   }
 
   #slime-mount {
-    width: 180px;
-    height: 180px;
+    width: 260px;
+    height: 200px;
+    margin-left: -40px;
   }
 
   .hero-side .about-side-block {
@@ -113,8 +114,9 @@
   }
 
   #slime-mount {
-    width: 180px;
-    height: 180px;
+    width: 220px;
+    height: 190px;
+    margin-left: 0;
   }
 
   .hero-text {
@@ -265,8 +267,9 @@
 @media (max-width: 480px) {
   /* Slime floating above the hero title — smallest on phones */
   #slime-mount {
-    width: 150px;
-    height: 150px;
+    width: 200px;
+    height: 170px;
+    margin-left: 0;
   }
 
   .hero-tagline {
