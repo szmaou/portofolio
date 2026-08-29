@@ -11,6 +11,10 @@ Personal portfolio website — vanilla HTML, CSS, and JavaScript.
 - Hamburger menu
 - Hero parallax effect
 - Theme toggle with inline SVG sprite
+- Video hero (MP4/WebM loop) with slime poster fallback
+- 3D slime mascot (Three.js GLB viewer, lazy-loaded)
+- Particle network background (canvas)
+- Tech marquee (animating tech-stack rail)
 - Contact details (WhatsApp, Email, Location)
 - Discord card & social links
 
@@ -31,12 +35,16 @@ Personal portfolio website — vanilla HTML, CSS, and JavaScript.
 │   ├── contact.css
 │   └── responsive.css
 ├── js/
-│   └── script.js
-└── img/
+│   ├── script.js
+│   ├── slime-viewer.js
+│   └── particles.js
+└── assets/
     ├── icons.svg
+    ├── slime.webp
     ├── rimuru.webp
-    ├── screenshot_1.webp
-    └── slime.webp
+    ├── saber.mp4
+    ├── saber-720p.webm
+    └── rimuru_slime.glb
 ```
 
 ## Getting Started

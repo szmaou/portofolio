@@ -73,7 +73,7 @@ function initViewer() {
 
   const loader = new GLTFLoader();
   loader.load(
-    "img/rimuru_slime.glb",
+    "assets/rimuru_slime.glb",
     (gltf) => {
       const root = gltf.scene;
       const box = new THREE.Box3().setFromObject(root);

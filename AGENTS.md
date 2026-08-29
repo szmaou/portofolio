@@ -15,7 +15,7 @@ Docker maps `80:80` regardless of `PORT` arg — `PORT` only affects the echo me
 - `index.html` — single page, 4 sections: `#home` (hero), `#about`, `#project`, `#contact`. No templating.
 - `css/` — load order in `index.html` matters: `variables.css` → `base.css` → `navbar.css` → `home.css` → `about.css` → `project.css` → `contact.css` → `responsive.css`. `variables.css` defines all CSS custom properties (`--bg`, `--text`, `--accent`, etc.) and `[data-theme="light"]` overrides.
 - `js/script.js` — single `DOMContentLoaded` entry point, no modules.
-- `img/icons.svg` — SVG sprite (`<use href="img/icons.svg#...">`), all icons + sun/moon + repo language icons.
+- `icons.svg` — SVG sprite in `assets/` (sun/moon/location only); GitHub & repo-language icons use the simpleicons CDN.
 - No `.github/`, no CI, no `opencode.json`.
 
 ## CSS Conventions

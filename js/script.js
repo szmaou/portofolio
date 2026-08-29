@@ -138,7 +138,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <p>${repo.description}</p>
             ${topics}
             <a href="${repo.html_url}" class="repo-link" target="_blank" rel="noopener">
-              <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><use href="img/icons.svg#github"/></svg>
+              <img src="https://cdn.simpleicons.org/github/181717" alt="GitHub" width="16" height="16" />
               visit the repo
             </a>
           </div>`;
