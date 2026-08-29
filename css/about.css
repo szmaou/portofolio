@@ -112,7 +112,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  #about::after {
+  #about::after,
+  .marquee__track {
     animation: none;
   }
 }
@@ -181,70 +182,58 @@
 
 .tech-stack {
   display: flex;
+  flex-direction: column;
   gap: 1.5rem;
 }
 
-.tech-group h5 {
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--accent-hover);
-  margin-bottom: 0.6rem;
-  text-transform: uppercase;
-  letter-spacing: 0.3px;
-}
-
-.tech-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-}
-
-.tech-item {
-  position: relative;
+/* ─── Tech marquee ─── */
+.marquee {
   overflow: hidden;
-  background: rgba(var(--accent-rgb), 0.08);
-  color: var(--accent);
-  padding: 0.3rem 0.8rem;
-  border-radius: 20px;
-  font-size: 0.8rem;
-  font-weight: 500;
-  border: 1px solid rgba(var(--accent-rgb), 0.18);
-  transition:
-    transform var(--duration-slow) var(--ease-luxury),
-    box-shadow var(--duration-slow) var(--ease-luxury),
-    background-color var(--duration-fast) var(--ease-luxury),
-    border-color var(--duration-fast) var(--ease-luxury),
-    color var(--duration-fast) var(--ease-luxury);
+  display: flex;
+  width: 100%;
+  -webkit-mask: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  mask: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
 }
 
-.tech-item::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: -60%;
-  width: 50%;
-  background: linear-gradient(
-    105deg,
-    transparent,
-    var(--glass-highlight),
-    transparent
-  );
-  transform: skewX(-20deg);
-  pointer-events: none;
-  transition: left var(--duration-slow) var(--ease-luxury);
+.marquee__track {
+  display: flex;
+  gap: 2.5rem;
+  flex-shrink: 0;
+  padding-right: 2.5rem;
+  animation: marquee 32s linear infinite;
 }
 
-.tech-item:hover {
-  transform: translateY(-2px);
-  border-color: var(--accent);
-  background: rgba(var(--accent-rgb), 0.14);
-  color: var(--accent-hover);
-  box-shadow: var(--glow-accent);
+.marquee--reverse .marquee__track {
+  animation-direction: reverse;
+  animation-duration: 40s;
 }
 
-.tech-item:hover::after {
-  left: 130%;
+.marquee:hover .marquee__track {
+  animation-play-state: paused;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.tech-icon {
+  width: 34px;
+  height: 34px;
+  background: var(--text);
+  -webkit-mask: var(--src) center / contain no-repeat;
+  mask: var(--src) center / contain no-repeat;
+  flex: 0 0 auto;
+  opacity: 0.9;
+  transition: opacity var(--duration-fast) var(--ease-luxury);
+}
+
+.tech-icon:hover {
+  opacity: 1;
 }
 
 .github-stats {
