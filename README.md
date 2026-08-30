@@ -1,5 +1,7 @@
 # szmaou/portofolio
 
+Live: https://hasan.cnp.my.id / https://szmaou.github.io/portofolio/
+
 Personal portfolio website — vanilla HTML, CSS, and JavaScript.
 
 ## Features

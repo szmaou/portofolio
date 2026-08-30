@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://hasan.cnp.my.id/sitemap.xml
+Sitemap: https://szmaou.github.io/portofolio/sitemap.xml
