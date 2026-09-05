@@ -87,14 +87,13 @@
     filter var(--duration-slow) var(--ease-luxury);
 }
 
-.card-icon img.repo-icon {
+.card-icon .repo-icon {
   width: 22px;
   height: 22px;
-  object-fit: contain;
   display: block;
 }
 
-[data-theme="dark"] .card-icon img.repo-icon[src*="/github/"] {
+[data-theme="dark"] .card-icon .repo-icon use[href$="#repo-default"] {
   filter: brightness(0) invert(1);
 }
 

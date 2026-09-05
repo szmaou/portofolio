@@ -10,8 +10,8 @@
   ).matches;
 
   /* ─── Config ─── */
-  const LINK = 140;
-  const MAX_COUNT = window.innerWidth < 768 ? 40 : 80;
+  const LINK = 110;
+  const MAX_COUNT = window.innerWidth < 768 ? 40 : 60;
   const COUNT = Math.min(MAX_COUNT, Math.floor(window.innerWidth / 16));
   const DOT_RADIUS = 1.6;
   const SPEED = 0.4;
@@ -110,7 +110,8 @@
     }
 
     /* lines: opacity 1 - d/LINK — O(n²), throttled by DPR */
-    if (frameCount % Math.ceil(dpr) === 0) {
+    if (frameCount > 1e6) frameCount = 0;
+    if (frameCount % (dpr >= 2 ? 2 : 1) === 0) {
       ctx.strokeStyle = color;
       ctx.lineWidth = 1 / dpr;
       for (let i = 0; i < particles.length; i++) {

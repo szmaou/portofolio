@@ -236,8 +236,8 @@
   opacity: 1;
 }
 
-[data-theme="dark"] .tech-icon[src*="/github/"],
-[data-theme="dark"] .tech-icon[src*="/opencode"] {
+[data-theme="dark"] .tech-icon use[href$="#tech-github"],
+[data-theme="dark"] .tech-icon use[href$="#tech-opencode"] {
   filter: brightness(0) invert(1);
 }
 

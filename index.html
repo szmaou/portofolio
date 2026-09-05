@@ -34,6 +34,9 @@
     <link rel="preconnect" href="https://cdn.simpleicons.org">
     <link rel="preconnect" href="https://cdn.jsdelivr.net">
     <link rel="preconnect" href="https://github.com">
+    <link rel="preconnect" href="https://avatars.githubusercontent.com" crossorigin>
+    <link rel="dns-prefetch" href="https://avatars.githubusercontent.com">
+    <link rel="preload" as="image" href="assets/slime.webp">
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -116,12 +119,13 @@
             muted
             loop
             playsinline
-            preload="metadata"
+            preload="none"
             poster="assets/slime.webp"
             aria-hidden="true"
+            disablepictureinpicture
           >
-            <source src="assets/saber-720p.webm" type="video/webm" />
-            <source src="assets/saber.mp4" type="video/mp4" />
+            <source src="assets/saber-720p.webm" type="video/webm" preload="none" />
+            <source src="assets/saber.mp4" type="video/mp4" preload="none" />
           </video>
         </div>
         <div class="hero-content">
@@ -140,7 +144,7 @@
             <div class="hero-side">
               <div class="about-image">
                 <div class="img-wrapper">
-                  <img src="https://github.com/szmaou.png" alt="HasanBae" />
+                  <img src="https://github.com/szmaou.png" width="224" height="224" alt="HasanBae" loading="eager" fetchpriority="high" />
                 </div>
               </div>
               <h3 class="hero-name">
@@ -198,210 +202,50 @@
               <div class="tech-stack">
                 <div class="marquee" aria-hidden="true">
                   <div class="marquee__track">
-                    <img
-                      class="tech-icon"
-                      src="https://cdn.simpleicons.org/html5/E34F26"
-                      alt="HTML"
-                    />
-                    <img
-                      class="tech-icon"
-                      src="https://cdn.simpleicons.org/css/1572B6"
-                      alt="CSS"
-                    />
-                    <img
-                      class="tech-icon"
-                      src="https://cdn.simpleicons.org/javascript/F7DF1E"
-                      alt="JavaScript"
-                    />
-                    <img
-                      class="tech-icon"
-                      src="https://cdn.simpleicons.org/openjdk/5382A1"
-                      alt="Java"
-                    />
-                    <img
-                      class="tech-icon"
-                      src="https://cdn.simpleicons.org/kotlin/7F52FF"
-                      alt="Kotlin"
-                    />
-                    <img
-                      class="tech-icon"
-                      src="https://cdn.simpleicons.org/php/777BB4"
-                      alt="PHP"
-                    />
-                    <img
-                      class="tech-icon"
-                      src="https://cdn.simpleicons.org/cplusplus/00599C"
-                      alt="C++"
-                    />
-                    <img
-                      class="tech-icon"
-                      src="https://cdn.simpleicons.org/flutter/02569B"
-                      alt="Flutter"
-                    />
-                    <img
-                      class="tech-icon"
-                      src="https://cdn.simpleicons.org/dart/0175C2"
-                      alt="Dart"
-                    />
-                    <img
-                      class="tech-icon"
-                      src="https://cdn.simpleicons.org/mariadb/003545"
-                      alt="MariaDB"
-                    />
-                    <img
-                      class="tech-icon"
-                      src="https://cdn.simpleicons.org/html5/E34F26"
-                      alt="HTML"
-                    />
-                    <img
-                      class="tech-icon"
-                      src="https://cdn.simpleicons.org/css/1572B6"
-                      alt="CSS"
-                    />
-                    <img
-                      class="tech-icon"
-                      src="https://cdn.simpleicons.org/javascript/F7DF1E"
-                      alt="JavaScript"
-                    />
-                    <img
-                      class="tech-icon"
-                      src="https://cdn.simpleicons.org/openjdk/5382A1"
-                      alt="Java"
-                    />
-                    <img
-                      class="tech-icon"
-                      src="https://cdn.simpleicons.org/kotlin/7F52FF"
-                      alt="Kotlin"
-                    />
-                    <img
-                      class="tech-icon"
-                      src="https://cdn.simpleicons.org/php/777BB4"
-                      alt="PHP"
-                    />
-                    <img
-                      class="tech-icon"
-                      src="https://cdn.simpleicons.org/cplusplus/00599C"
-                      alt="C++"
-                    />
-                    <img
-                      class="tech-icon"
-                      src="https://cdn.simpleicons.org/flutter/02569B"
-                      alt="Flutter"
-                    />
-                    <img
-                      class="tech-icon"
-                      src="https://cdn.simpleicons.org/dart/0175C2"
-                      alt="Dart"
-                    />
-                    <img
-                      class="tech-icon"
-                      src="https://cdn.simpleicons.org/mariadb/003545"
-                      alt="MariaDB"
-                    />
+                    <svg class="tech-icon"><use href="assets/icons.svg#tech-html5"/></svg>
+                    <svg class="tech-icon"><use href="assets/icons.svg#tech-css"/></svg>
+                    <svg class="tech-icon"><use href="assets/icons.svg#tech-javascript"/></svg>
+                    <svg class="tech-icon"><use href="assets/icons.svg#tech-openjdk"/></svg>
+                    <svg class="tech-icon"><use href="assets/icons.svg#tech-kotlin"/></svg>
+                    <svg class="tech-icon"><use href="assets/icons.svg#tech-php"/></svg>
+                    <svg class="tech-icon"><use href="assets/icons.svg#tech-cplusplus"/></svg>
+                    <svg class="tech-icon"><use href="assets/icons.svg#tech-flutter"/></svg>
+                    <svg class="tech-icon"><use href="assets/icons.svg#tech-dart"/></svg>
+                    <svg class="tech-icon"><use href="assets/icons.svg#tech-mariadb"/></svg>
+                    <svg class="tech-icon"><use href="assets/icons.svg#tech-html5"/></svg>
+                    <svg class="tech-icon"><use href="assets/icons.svg#tech-css"/></svg>
+                    <svg class="tech-icon"><use href="assets/icons.svg#tech-javascript"/></svg>
+                    <svg class="tech-icon"><use href="assets/icons.svg#tech-openjdk"/></svg>
+                    <svg class="tech-icon"><use href="assets/icons.svg#tech-kotlin"/></svg>
+                    <svg class="tech-icon"><use href="assets/icons.svg#tech-php"/></svg>
+                    <svg class="tech-icon"><use href="assets/icons.svg#tech-cplusplus"/></svg>
+                    <svg class="tech-icon"><use href="assets/icons.svg#tech-flutter"/></svg>
+                    <svg class="tech-icon"><use href="assets/icons.svg#tech-dart"/></svg>
+                    <svg class="tech-icon"><use href="assets/icons.svg#tech-mariadb"/></svg>
                   </div>
                 </div>
                 <div class="marquee marquee--reverse" aria-hidden="true">
                   <div class="marquee__track">
-                    <img
-                      class="tech-icon"
-                      src="https://cdn.simpleicons.org/github/181717"
-                      alt="GitHub"
-                    />
-                    <img
-                      class="tech-icon"
-                      src="https://cdn.simpleicons.org/git/F05032"
-                      alt="Git"
-                    />
-                    <img
-                      class="tech-icon"
-                      src="https://cdn.simpleicons.org/linux/FCC624"
-                      alt="Linux"
-                    />
-                    <img
-                      class="tech-icon"
-                      src="https://cdn.simpleicons.org/docker/2496ED"
-                      alt="Docker"
-                    />
-                    <img
-                      class="tech-icon"
-                      src="https://cdn.simpleicons.org/neovim/57A143"
-                      alt="Neovim"
-                    />
-                    <img
-                      class="tech-icon"
-                      src="https://cdn.simpleicons.org/androidstudio/3DDC84"
-                      alt="Android Studio"
-                    />
-                    <img
-                      class="tech-icon"
-                      src="https://cdn.simpleicons.org/archlinux/1793D1"
-                      alt="Arch Linux"
-                    />
-                    <img
-                      class="tech-icon"
-                      src="https://cdn.simpleicons.org/ubuntu/E95420"
-                      alt="Ubuntu"
-                    />
-                    <img
-                      class="tech-icon"
-                      src="https://cdn.simpleicons.org/opencode"
-                      alt="Opencode"
-                    />
-                    <img
-                      class="tech-icon"
-                      src="https://cdn.simpleicons.org/claudecode/D97757"
-                      alt="Claude Code"
-                    />
-                    <img
-                      class="tech-icon"
-                      src="https://cdn.simpleicons.org/github/181717"
-                      alt="GitHub"
-                    />
-                    <img
-                      class="tech-icon"
-                      src="https://cdn.simpleicons.org/git/F05032"
-                      alt="Git"
-                    />
-                    <img
-                      class="tech-icon"
-                      src="https://cdn.simpleicons.org/linux/FCC624"
-                      alt="Linux"
-                    />
-                    <img
-                      class="tech-icon"
-                      src="https://cdn.simpleicons.org/docker/2496ED"
-                      alt="Docker"
-                    />
-                    <img
-                      class="tech-icon"
-                      src="https://cdn.simpleicons.org/neovim/57A143"
-                      alt="Neovim"
-                    />
-                    <img
-                      class="tech-icon"
-                      src="https://cdn.simpleicons.org/androidstudio/3DDC84"
-                      alt="Android Studio"
-                    />
-                    <img
-                      class="tech-icon"
-                      src="https://cdn.simpleicons.org/archlinux/1793D1"
-                      alt="Arch Linux"
-                    />
-                    <img
-                      class="tech-icon"
-                      src="https://cdn.simpleicons.org/ubuntu/E95420"
-                      alt="Ubuntu"
-                    />
-                    <img
-                      class="tech-icon"
-                      src="https://cdn.simpleicons.org/opencode"
-                      alt="Opencode"
-                    />
-                    <img
-                      class="tech-icon"
-                      src="https://cdn.simpleicons.org/claudecode/D97757"
-                      alt="Claude Code"
-                    />
+                    <svg class="tech-icon"><use href="assets/icons.svg#tech-github"/></svg>
+                    <svg class="tech-icon"><use href="assets/icons.svg#tech-git"/></svg>
+                    <svg class="tech-icon"><use href="assets/icons.svg#tech-linux"/></svg>
+                    <svg class="tech-icon"><use href="assets/icons.svg#tech-docker"/></svg>
+                    <svg class="tech-icon"><use href="assets/icons.svg#tech-neovim"/></svg>
+                    <svg class="tech-icon"><use href="assets/icons.svg#tech-androidstudio"/></svg>
+                    <svg class="tech-icon"><use href="assets/icons.svg#tech-archlinux"/></svg>
+                    <svg class="tech-icon"><use href="assets/icons.svg#tech-ubuntu"/></svg>
+                    <svg class="tech-icon"><use href="assets/icons.svg#tech-opencode"/></svg>
+                    <svg class="tech-icon"><use href="assets/icons.svg#tech-claudecode"/></svg>
+                    <svg class="tech-icon"><use href="assets/icons.svg#tech-github"/></svg>
+                    <svg class="tech-icon"><use href="assets/icons.svg#tech-git"/></svg>
+                    <svg class="tech-icon"><use href="assets/icons.svg#tech-linux"/></svg>
+                    <svg class="tech-icon"><use href="assets/icons.svg#tech-docker"/></svg>
+                    <svg class="tech-icon"><use href="assets/icons.svg#tech-neovim"/></svg>
+                    <svg class="tech-icon"><use href="assets/icons.svg#tech-androidstudio"/></svg>
+                    <svg class="tech-icon"><use href="assets/icons.svg#tech-archlinux"/></svg>
+                    <svg class="tech-icon"><use href="assets/icons.svg#tech-ubuntu"/></svg>
+                    <svg class="tech-icon"><use href="assets/icons.svg#tech-opencode"/></svg>
+                    <svg class="tech-icon"><use href="assets/icons.svg#tech-claudecode"/></svg>
                   </div>
                 </div>
               </div>

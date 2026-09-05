@@ -39,12 +39,45 @@ document.addEventListener("DOMContentLoaded", () => {
   /* contributed repos displayed alongside owned ones */
   const CONTRIBUTED_REPOS = ["terarush/ping-uptime", "cnp-plus/pplg"];
 
+  /* ─── sessionStorage cache ─── */
+  const CACHE_PREFIX = "gh-cache-";
+  const CACHE_TTL = 300000; /* 5 minutes */
+
+  function getCacheKey(type) {
+    return CACHE_PREFIX + type;
+  }
+
+  function getFromCache(type) {
+    try {
+      const entry = JSON.parse(sessionStorage.getItem(getCacheKey(type)));
+      if (entry && Date.now() - entry.timestamp < CACHE_TTL) {
+        return entry.data;
+      }
+    } catch {}
+    return null;
+  }
+
+  function setInCache(type, data) {
+    try {
+      const entry = { timestamp: Date.now(), data };
+      sessionStorage.setItem(getCacheKey(type), JSON.stringify(entry));
+    } catch {}
+  }
+
   async function fetchGitHubStats() {
     const reposEl = document.getElementById("gh-repos");
     const followersEl = document.getElementById("gh-followers");
     const followingEl = document.getElementById("gh-following");
 
     try {
+      const cached = getFromCache("stats");
+      if (cached) {
+        reposEl.textContent = cached.public_repos;
+        followersEl.textContent = cached.followers;
+        followingEl.textContent = cached.following;
+        return;
+      }
+
       const res = await fetch(`https://api.github.com/users/${GITHUB_USER}`);
       if (!res.ok) throw new Error("GitHub API error");
       const data = await res.json();
@@ -52,6 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
       reposEl.textContent = data.public_repos;
       followersEl.textContent = data.followers;
       followingEl.textContent = data.following;
+      setInCache("stats", data);
     } catch {
       reposEl.textContent = "—";
       followersEl.textContent = "—";
@@ -61,8 +95,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  fetchGitHubStats();
-  fetchGitHubRepos();
+  Promise.allSettled([fetchGitHubStats(), fetchGitHubRepos()]);
 
   /* ─── GitHub Repos ─── */
 
@@ -74,6 +107,9 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   async function fetchContributedRepos() {
+    const cached = getFromCache("contributed");
+    if (cached) return cached;
+
     const results = await Promise.allSettled(
       CONTRIBUTED_REPOS.map((fullName) =>
         fetch(`https://api.github.com/repos/${fullName}`).then((res) => {
@@ -91,26 +127,37 @@ document.addEventListener("DOMContentLoaded", () => {
         console.warn("Contributed repo fetch failed:", result.reason);
       }
     });
+    setInCache("contributed", repos);
     return repos;
   }
 
   async function fetchGitHubRepos() {
     const grid = document.getElementById("project-grid");
     try {
-      try {
-        const res = await fetch(
-          `https://api.github.com/users/${GITHUB_USER}/repos?sort=updated&per_page=50`,
-        );
-        if (!res.ok) throw new Error("GitHub API error");
-        const repos = await res.json();
-        allRepos = repos.filter((r) => !r.fork && r.description);
-      } catch {
-        /* owned fetch failed; contributed may still load below */
-      }
+      const [ownedResult, contributedResult] = await Promise.allSettled([
+        (async () => {
+          const cached = getFromCache("repos");
+          if (cached) return cached;
+          const res = await fetch(
+            `https://api.github.com/users/${GITHUB_USER}/repos?sort=updated&per_page=50`,
+          );
+          if (!res.ok) throw new Error("GitHub API error");
+          const repos = await res.json();
+          const filtered = repos.filter((r) => !r.fork && r.description);
+          setInCache("repos", filtered);
+          return filtered;
+        })(),
+        fetchContributedRepos().catch((e) => {
+          console.warn("Contributed repos failed:", e);
+          return [];
+        }),
+      ]);
 
-      try {
-        const contributed = await fetchContributedRepos();
-        contributed.forEach((r) => {
+      if (ownedResult.status === "fulfilled") {
+        allRepos = ownedResult.value;
+      }
+      if (contributedResult.status === "fulfilled") {
+        contributedResult.value.forEach((r) => {
           if (
             !allRepos.some(
               (x) => x.id === r.id || x.full_name === r.full_name,
@@ -119,8 +166,6 @@ document.addEventListener("DOMContentLoaded", () => {
             allRepos.push(r);
           }
         });
-      } catch (e) {
-        console.warn("Contributed repos failed:", e);
       }
 
       if (allRepos.length === 0) {
@@ -240,32 +285,30 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function getRepoIcon(language) {
     const iconMap = {
-      HTML: { slug: 'html5', color: 'E34F26' },
-      CSS: { slug: 'css', color: '1572B6' },
-      JavaScript: { slug: 'javascript', color: 'F7DF1E' },
-      TypeScript: { slug: 'typescript', color: '3178C6' },
-      Python: { slug: 'python', color: '3776AB' },
-      Java: { slug: 'openjdk', color: '5382A1' },
-      Kotlin: { slug: 'kotlin', color: '7F52FF' },
-      Vue: { slug: 'vuedotjs', color: '4FC08D' },
-      QML: { slug: 'qml', color: '41CD52' },
-      Dart: { slug: 'dart', color: '0175C2' },
-      Swift: { slug: 'swift', color: 'F05138' },
-      PHP: { slug: 'php', color: '777BB4' },
-      Ruby: { slug: 'ruby', color: 'CC342D' },
-      Shell: { slug: 'gnubash', color: '4EAA25' },
-      Lua: { slug: 'lua', color: '000080' },
-      C: { slug: 'c', color: 'A8B9CC' },
-      'C++': { slug: 'cplusplus', color: '00599C' },
-      Rust: { slug: 'rust', color: 'DEA584' },
-      Go: { slug: 'go', color: '00ADD8' },
+      HTML: "repo-html",
+      CSS: "repo-css",
+      JavaScript: "repo-javascript",
+      TypeScript: "repo-typescript",
+      Python: "repo-python",
+      Java: "repo-java",
+      Kotlin: "repo-kotlin",
+      Vue: "repo-vue",
+      QML: "repo-qml",
+      Dart: "repo-dart",
+      Swift: "repo-swift",
+      PHP: "repo-php",
+      Ruby: "repo-ruby",
+      Shell: "repo-shell",
+      Lua: "repo-lua",
+      C: "repo-c",
+      "C++": "repo-cpp",
+      Rust: "repo-rust",
+      Go: "repo-go",
     };
 
-    const entry = iconMap[language];
-    const slug = entry ? entry.slug : 'github';
-    const color = entry ? entry.color : '181717';
-    const label = language || 'Unknown';
-    return `<img class="repo-icon" src="https://cdn.simpleicons.org/${slug}/${color}" alt="${escapeHtmlAttr(label)}" width="22" height="22">`;
+    const symbol = iconMap[language] || "repo-default";
+    const label = language || "Unknown";
+    return `<svg class="repo-icon" viewBox="0 0 24 24" width="22" height="22" role="img" aria-label="${escapeHtmlAttr(label)}"><use href="assets/icons.svg#${symbol}"/></svg>`;
   }
 
   document.querySelectorAll(".sort-btn").forEach((btn) => {
