@@ -4,6 +4,7 @@
   background: var(--bg-card);
   position: relative;
   overflow: hidden;
+  contain: layout style paint;
 }
 
 #about::before {

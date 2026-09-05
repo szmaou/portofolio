@@ -418,7 +418,8 @@ document.addEventListener("DOMContentLoaded", () => {
     window.matchMedia("(pointer: fine)").matches &&
     !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  if (canTilt) {
+  /* Project-card tilt — deferred to idle (non-critical interactivity) */
+  function setupProjectCardTilt() {
     document.querySelectorAll(".project-card").forEach((card) => {
       let ticking = false;
       card.addEventListener("mousemove", (e) => {
@@ -438,8 +439,16 @@ document.addEventListener("DOMContentLoaded", () => {
         card.style.transform = "";
       });
     });
+  }
 
-    /* Hero avatar tilt (lighter) */
+  if (canTilt) {
+    if ("requestIdleCallback" in window) {
+      requestIdleCallback(() => setupProjectCardTilt(), { timeout: 1500 });
+    } else {
+      setupProjectCardTilt();
+    }
+
+    /* Hero avatar tilt (lighter) — kept eager */
     const avatar = document.querySelector(".hero-side .img-wrapper");
     if (avatar) {
       let ticking = false;

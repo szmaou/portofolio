@@ -4,6 +4,7 @@
   background: var(--bg);
   position: relative;
   overflow: hidden;
+  contain: layout style paint;
 }
 
 [data-theme="light"] #contact {

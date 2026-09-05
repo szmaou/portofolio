@@ -5,6 +5,7 @@
   align-items: flex-start;
   position: relative;
   overflow: hidden;
+  contain: layout style paint;
 }
 
 #project::before {
