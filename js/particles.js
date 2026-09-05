@@ -1,5 +1,14 @@
 /* ─── Hero Particles ─── */
 (() => {
+  /* Kill switch: 1024px is the primary gate — no particle loop, animation,
+     or listeners on mobile/tablet. Reduced motion bails here too
+     (canvas hidden via display:none, no rAF frame loop starts). */
+  if (window.matchMedia("(max-width: 1024px)").matches || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    const c = document.getElementById("hero-particles");
+    if (c) c.style.display = "none";
+    return;
+  }
+
   const canvas = document.getElementById("hero-particles");
   if (!canvas || !canvas.getContext) return;
 

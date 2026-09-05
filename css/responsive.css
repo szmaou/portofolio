@@ -10,6 +10,10 @@
   }
 
   #slime-mount {
+    /* 3D viewer disabled on mobile/tablet — collapsed via the lazy-import
+       guard (index.html) + js/slime-viewer.js kill switch, so the mount
+       removes itself from the hero flow instead of leaving an empty box. */
+    display: none;
     width: 220px;
     height: 200px;
     margin-left: 0;

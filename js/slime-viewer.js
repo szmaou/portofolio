@@ -37,6 +37,14 @@ if (!MOUNT || !CANVAS || !webglAvailable()) {
 }
 
 function initViewer() {
+  /* Kill switch: skip 3D on mobile/tablet (avoids GLB fetch + WebGL init cost).
+     index.html already blocks the dynamic import here, so this is
+     defense-in-depth for any direct import path. */
+  if (window.matchMedia("(max-width: 1024px)").matches) {
+    MOUNT.style.display = "none";
+    return;
+  }
+
   const scene = new THREE.Scene();
   scene.background = null; /* null keeps the glass pedestal visible */
 
