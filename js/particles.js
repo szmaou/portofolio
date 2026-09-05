@@ -1,9 +1,9 @@
 /* ─── Hero Particles ─── */
 (() => {
-  /* Kill switch: 1024px is the primary gate — no particle loop, animation,
-     or listeners on mobile/tablet. Reduced motion bails here too
-     (canvas hidden via display:none, no rAF frame loop starts). */
-  if (window.matchMedia("(max-width: 1024px)").matches || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  /* Reduced-motion gate: keep the canvas off and never start the frame loop
+     when motion is disabled. Particles otherwise run on every viewport —
+     mobile/tablet get a lighter config than desktop (see computeConfig). */
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
     const c = document.getElementById("hero-particles");
     if (c) c.style.display = "none";
     return;
@@ -14,20 +14,27 @@
 
   const ctx = canvas.getContext("2d");
   const dpr = Math.min(window.devicePixelRatio || 1, 2);
-  const prefersReduced = window.matchMedia(
-    "(prefers-reduced-motion: reduce)"
-  ).matches;
 
   /* ─── Config ─── */
-  const LINK = 110;
-  const MAX_COUNT = window.innerWidth < 768 ? 40 : 60;
-  const COUNT = Math.min(MAX_COUNT, Math.floor(window.innerWidth / 16));
-  const DOT_RADIUS = 1.6;
-  const SPEED = 0.4;
   const DAMPING = 0.98;
   const REPEL_DIST = 60;
   const REPEL_STRENGTH = -0.6;
   const ATTRACT_STRENGTH = 0.25;
+
+  /* Viewport-aware config: recomputed on resize so particle count / link
+     distance / speed scale with the current breakpoint. Mobile (≤768px)
+     stays light (fewer, slower, tighter links); desktop stays rich. */
+  function computeConfig() {
+    const mobile = window.innerWidth <= 768;
+    const MAX_COUNT = mobile ? 25 : 60;
+    const LINK = mobile ? 90 : 110;
+    const SPEED = mobile ? 0.3 : 0.4;
+    const DOT_RADIUS = mobile ? 1.4 : 1.6;
+    const COUNT = Math.min(MAX_COUNT, Math.floor(window.innerWidth / 24));
+    return { MAX_COUNT, LINK, SPEED, DOT_RADIUS, COUNT };
+  }
+
+  let cfg = computeConfig();
 
   /* ─── State ─── */
   let particles = [];
@@ -58,24 +65,24 @@
 
   function buildParticles() {
     particles = [];
-    for (let i = 0; i < COUNT; i++) {
+    for (let i = 0; i < cfg.COUNT; i++) {
       particles.push({
         x: Math.random() * width,
         y: Math.random() * height,
-        vx: (Math.random() - 0.5) * SPEED,
-        vy: (Math.random() - 0.5) * SPEED,
+        vx: (Math.random() - 0.5) * cfg.SPEED,
+        vy: (Math.random() - 0.5) * cfg.SPEED,
       });
     }
   }
 
-  /* ─── Mouse field: repel < 60, attract 60..140, falloff 1 - d/140 ─── */
+  /* ─── Mouse field: repel < 60, attract 60..LINK, falloff 1 - d/LINK ─── */
   function applyMouse(p) {
     if (!mouse) return;
     const vx = mouse.x - p.x;
     const vy = mouse.y - p.y;
     const d = Math.hypot(vx, vy);
-    if (d === 0 || d > LINK) return;
-    const falloff = 1 - d / LINK;
+    if (d === 0 || d > cfg.LINK) return;
+    const falloff = 1 - d / cfg.LINK;
     const strength = d < REPEL_DIST ? REPEL_STRENGTH : ATTRACT_STRENGTH;
     const f = strength * falloff;
     p.vx += (vx / d) * f;
@@ -91,8 +98,8 @@
     for (let i = 0; i < particles.length; i++) {
       const p = particles[i];
 
-      p.vx += (Math.random() - 0.5) * SPEED;
-      p.vy += (Math.random() - 0.5) * SPEED;
+      p.vx += (Math.random() - 0.5) * cfg.SPEED;
+      p.vy += (Math.random() - 0.5) * cfg.SPEED;
       p.vx *= DAMPING;
       p.vy *= DAMPING;
 
@@ -130,8 +137,8 @@
           const dx = a.x - b.x;
           const dy = a.y - b.y;
           const d = Math.hypot(dx, dy);
-          if (d > LINK) continue;
-          ctx.globalAlpha = 1 - d / LINK;
+          if (d > cfg.LINK) continue;
+          ctx.globalAlpha = 1 - d / cfg.LINK;
           ctx.beginPath();
           ctx.moveTo(a.x, a.y);
           ctx.lineTo(b.x, b.y);
@@ -146,7 +153,7 @@
     for (let i = 0; i < particles.length; i++) {
       const p = particles[i];
       ctx.beginPath();
-      ctx.arc(p.x, p.y, DOT_RADIUS, 0, Math.PI * 2);
+      ctx.arc(p.x, p.y, cfg.DOT_RADIUS, 0, Math.PI * 2);
       ctx.fill();
     }
 
@@ -161,15 +168,16 @@
     for (let i = 0; i < particles.length; i++) {
       const p = particles[i];
       ctx.beginPath();
-      ctx.arc(p.x, p.y, DOT_RADIUS, 0, Math.PI * 2);
+      ctx.arc(p.x, p.y, cfg.DOT_RADIUS, 0, Math.PI * 2);
       ctx.fill();
     }
   }
 
   function onResize() {
     if (!resizeCanvas()) return;
+    cfg = computeConfig();
     buildParticles();
-    if (prefersReduced) drawStatic();
+    drawStatic();
   }
 
   function init() {
@@ -189,17 +197,6 @@
     }, { passive: true });
 
     window.addEventListener("resize", onResize, { passive: true });
-
-    if (prefersReduced) {
-      drawStatic();
-      /* redraw static dots if the theme changes */
-      const themeWatcher = new MutationObserver(drawStatic);
-      themeWatcher.observe(document.documentElement, {
-        attributes: true,
-        attributeFilter: ["data-theme"],
-      });
-      return;
-    }
 
     requestAnimationFrame(step);
   }

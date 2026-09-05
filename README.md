@@ -13,8 +13,9 @@ Personal portfolio website — vanilla HTML, CSS, and JavaScript.
 - Hamburger menu
 - Hero parallax effect
 - Theme toggle (sun/moon sprite + location only)
-- Video hero (WebM 720p preferred, MP4 fallback) with particle network background (canvas, mouse grab/repel)
-- 3D slime mascot (Three.js GLB viewer, idle spin, transparent)
+- Hero: video on desktop (WebM 720p preferred, MP4 fallback), image on mobile/tablet ≤1024px (`saber.webp`, lighter, no autoplay) — reorders on ≤768px (avatar/stats above title + CTAs)
+- Particle network background (canvas, mouse grab/repel) — light on mobile ≤768px, rich on desktop; respects `prefers-reduced-motion`
+- 3D slime mascot (Three.js GLB viewer, idle spin, transparent — desktop only, disabled ≤1024px)
 - Tech marquee (animating SimpleIcons CDN rail, pause on hover)
 - SimpleIcons CDN for social & language icons (colored, dark-mode invert for GitHub/Opencode)
 - Contact details (WhatsApp, Email, Location)
@@ -41,12 +42,12 @@ Personal portfolio website — vanilla HTML, CSS, and JavaScript.
 │   ├── slime-viewer.js
 │   └── particles.js
 └── assets/
-    ├── icons.svg
-    ├── slime.webp
-    ├── rimuru.webp
-    ├── saber.mp4
-    ├── saber-720p.webm
-    └── rimuru_slime.glb
+     ├── icons.svg
+     ├── slime.webp
+     ├── saber.webp         # hero image on mobile/tablet ≤1024px
+     ├── saber.mp4          # hero video on desktop
+     ├── saber-720p.webm    # hero video on desktop (preferred)
+     └── rimuru_slime.glb   # 3D mascot (desktop only)
 ```
 
 ## Getting Started
