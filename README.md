@@ -8,7 +8,7 @@ Personal portfolio website — vanilla HTML, CSS, and JavaScript.
 
 - Dark/light theme (system preference + localStorage)
 - Responsive layout (desktop & mobile)
-- GitHub API integration (repos, stats, sort & pagination, plus `CONTRIBUTED_REPOS` merge)
+- GitHub API integration (repos, stats, sort & pagination, plus `CONTRIBUTED_REPOS`/`CONTRIBUTED_ORGS` merge)
 - Scroll reveal animation
 - Hamburger menu
 - Hero parallax effect

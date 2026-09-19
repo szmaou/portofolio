@@ -26,7 +26,7 @@ Vanilla HTML / CSS / JS only. No build, bundler, `package.json`, tests/lint/type
 
 ## JS Gotchas
 - Loader hides after **2** fetches (`loadCount===2`: `fetchGitHubStats()` + `fetchGitHubRepos()` via `Promise.allSettled` at `script.js:98`). Removing one without fixing `loaderDone()` stalls loader. Cached in `sessionStorage` `gh-cache-*` 5min.
-- GitHub user hardcoded `const GITHUB_USER="szmaou"` in `js/script.js`. APIs `users/${GITHUB_USER}` and `/repos?sort=updated&per_page=50` filtered `!fork && description`. `CONTRIBUTED_REPOS=["terarush/ping-uptime","cnp-plus/pplg"]` merged `Promise.allSettled`, dedup `id/full_name`.
+- GitHub user hardcoded `const GITHUB_USER="szmaou"` in `js/script.js`. APIs `users/${GITHUB_USER}` and `/repos?sort=updated&per_page=50` filtered `!fork && description`. `CONTRIBUTED_REPOS=["terarush/ping-uptime"]` + `CONTRIBUTED_ORGS=["cnp-plus"]` (`/orgs/${org}/repos?per_page=100`) merged `Promise.allSettled`, dedup `id/full_name`.
 - Stat IDs `gh-repos`/`gh-followers`/`gh-following` + `#github-stats` — JS selects by ID, don't rename.
 - Repo pagination `getPerPage()` 3 `≤768px` else 6; `resize` resets to page 1 when crossing breakpoint (`prevPerPage`).
 - Active nav `offsetTop -120` + `scroll-padding-top:70px`.

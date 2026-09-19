@@ -37,7 +37,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const GITHUB_USER = "szmaou";
   /* contributed repos displayed alongside owned ones */
-  const CONTRIBUTED_REPOS = ["terarush/ping-uptime", "cnp-plus/pplg"];
+  const CONTRIBUTED_REPOS = ["terarush/ping-uptime"];
+  /* whole orgs whose repos are displayed alongside owned ones */
+  const CONTRIBUTED_ORGS = ["cnp-plus"];
 
   /* ─── sessionStorage cache ─── */
   const CACHE_PREFIX = "gh-cache-";
@@ -131,42 +133,77 @@ document.addEventListener("DOMContentLoaded", () => {
     return repos;
   }
 
+  async function fetchContributedOrgs() {
+    const cached = getFromCache("orgs");
+    if (cached) return cached;
+
+    const results = await Promise.allSettled(
+      CONTRIBUTED_ORGS.map((org) =>
+        fetch(
+          `https://api.github.com/orgs/${org}/repos?sort=updated&per_page=100`,
+        ).then((res) => {
+          if (!res.ok) throw new Error(`Failed to fetch org ${org}`);
+          return res.json();
+        }),
+      ),
+    );
+    const repos = [];
+    results.forEach((result) => {
+      if (result.status === "fulfilled") {
+        result.value.forEach((r) => {
+          if (!r.fork && r.description) repos.push(r);
+        });
+      } else {
+        console.warn("Contributed org fetch failed:", result.reason);
+      }
+    });
+    setInCache("orgs", repos);
+    return repos;
+  }
+
   async function fetchGitHubRepos() {
     const grid = document.getElementById("project-grid");
     try {
-      const [ownedResult, contributedResult] = await Promise.allSettled([
-        (async () => {
-          const cached = getFromCache("repos");
-          if (cached) return cached;
-          const res = await fetch(
-            `https://api.github.com/users/${GITHUB_USER}/repos?sort=updated&per_page=50`,
-          );
-          if (!res.ok) throw new Error("GitHub API error");
-          const repos = await res.json();
-          const filtered = repos.filter((r) => !r.fork && r.description);
-          setInCache("repos", filtered);
-          return filtered;
-        })(),
-        fetchContributedRepos().catch((e) => {
-          console.warn("Contributed repos failed:", e);
-          return [];
-        }),
-      ]);
+      const [ownedResult, contributedResult, orgsResult] =
+        await Promise.allSettled([
+          (async () => {
+            const cached = getFromCache("repos");
+            if (cached) return cached;
+            const res = await fetch(
+              `https://api.github.com/users/${GITHUB_USER}/repos?sort=updated&per_page=50`,
+            );
+            if (!res.ok) throw new Error("GitHub API error");
+            const repos = await res.json();
+            const filtered = repos.filter((r) => !r.fork && r.description);
+            setInCache("repos", filtered);
+            return filtered;
+          })(),
+          fetchContributedRepos().catch((e) => {
+            console.warn("Contributed repos failed:", e);
+            return [];
+          }),
+          fetchContributedOrgs().catch((e) => {
+            console.warn("Contributed orgs failed:", e);
+            return [];
+          }),
+        ]);
 
       if (ownedResult.status === "fulfilled") {
         allRepos = ownedResult.value;
       }
-      if (contributedResult.status === "fulfilled") {
-        contributedResult.value.forEach((r) => {
-          if (
-            !allRepos.some(
-              (x) => x.id === r.id || x.full_name === r.full_name,
-            )
-          ) {
-            allRepos.push(r);
-          }
-        });
-      }
+      [contributedResult, orgsResult].forEach((result) => {
+        if (result.status === "fulfilled") {
+          result.value.forEach((r) => {
+            if (
+              !allRepos.some(
+                (x) => x.id === r.id || x.full_name === r.full_name,
+              )
+            ) {
+              allRepos.push(r);
+            }
+          });
+        }
+      });
 
       if (allRepos.length === 0) {
         grid.innerHTML =
