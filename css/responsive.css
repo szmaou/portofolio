@@ -317,20 +317,6 @@
     justify-content: center;
   }
 
-  .discord-card {
-    flex-direction: column;
-    align-items: stretch;
-    text-align: center;
-  }
-
-  .discord-card-content {
-    justify-content: center;
-  }
-
-  .discord-card-btn {
-    text-align: center;
-  }
-
   .section {
     padding: 3rem 1rem;
   }
