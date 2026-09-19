@@ -249,7 +249,8 @@
     box-shadow var(--duration-slow) var(--ease-luxury);
 }
 
-.connect-link img {
+.connect-link img,
+.connect-link svg {
   width: 20px;
   height: 20px;
   object-fit: contain;
@@ -277,7 +278,8 @@
   box-shadow: var(--shadow-sm), var(--glow-accent);
 }
 
-.connect-link:hover img {
+.connect-link:hover img,
+.connect-link:hover svg {
   transform: scale(1.12);
   filter: drop-shadow(0 0 8px rgba(var(--accent-rgb), 0.45));
 }
