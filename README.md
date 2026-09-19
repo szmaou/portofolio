@@ -16,7 +16,7 @@ Personal portfolio website — vanilla HTML, CSS, and JavaScript.
 - Hero: video on desktop (WebM 720p preferred, MP4 fallback), image on mobile/tablet ≤1024px (`saber.webp`, lighter, no autoplay) — reorders on ≤768px (avatar/stats above title + CTAs)
 - Particle network background (canvas, mouse grab/repel) — light on mobile ≤768px, rich on desktop; respects `prefers-reduced-motion`
 - 3D slime mascot (Three.js GLB viewer, idle spin, transparent — desktop only, disabled ≤1024px)
-- Tech marquee (SimpleIcons CDN rail, pause on hover)
+- Tech Stack in 4 categories (Languages, Frameworks & Mobile, Databases & DevOps, System & Workspace) via SimpleIcons CDN
 - SimpleIcons CDN for tech, repo, social & contact icons (colored, dark-mode invert for GitHub/opencode)
 - Contact details (WhatsApp, Email, Location)
 - Discord card & social links

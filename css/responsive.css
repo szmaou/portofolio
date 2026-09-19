@@ -204,8 +204,8 @@
     gap: 1rem;
   }
 
-  .marquee__track {
-    --marquee-gap: 1.8rem;
+  .tech-categories {
+    grid-template-columns: 1fr;
   }
 
   #hero-particles {
