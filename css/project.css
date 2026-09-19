@@ -91,10 +91,11 @@
 .card-icon .repo-icon {
   width: 22px;
   height: 22px;
+  object-fit: contain;
   display: block;
 }
 
-[data-theme="dark"] .card-icon .repo-icon use[href$="#repo-default"] {
+[data-theme="dark"] .card-icon .repo-icon[src*="/github/"] {
   filter: brightness(0) invert(1);
 }
 

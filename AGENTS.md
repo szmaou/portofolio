@@ -1,39 +1,39 @@
 # AGENTS.md
 
 ## Stack
-Vanilla HTML / CSS / JS only. No build, no bundler, no `package.json`, no tests/lint/typecheck. Served as static files via `nginx:alpine` (`COPY . /usr/share/nginx/html`).
+Vanilla HTML / CSS / JS only. No build, bundler, `package.json`, tests/lint/typecheck, or `opencode.json`. Static via `nginx:alpine` (`COPY . /usr/share/nginx/html`).
 
 ## Run
 ```bash
-./run.sh --docker          # docker compose up -d --build, container port 80
+./run.sh --docker          # docker compose up -d --build, 80:80 (PORT arg ignored by compose)
 ./run.sh --python [port]   # python3 -m http.server (default 8080)
 ./run.sh --npx [port]      # npx live-server --port --no-browser
 ```
-Docker maps `80:80` regardless of `PORT` arg — `PORT` only affects the echo message and `--python`/`--npx` modes.
+`PORT` only affects the echo + `--python`/`--npx` modes. No `.github/` or CI.
 
 ## Structure
-- `index.html` — single page, 4 sections: `#home` (hero), `#about`, `#project`, `#contact`. No templating.
-- `css/` — load order in `index.html` matters: `variables.css` → `base.css` → `navbar.css` → `home.css` → `about.css` → `project.css` → `contact.css` → `responsive.css`. `variables.css` defines all CSS custom properties (`--bg`, `--text`, `--accent`, `--accent-rgb`, etc.) and `[data-theme="light"]` overrides.
-- `js/` — `script.js` (main `DOMContentLoaded`, no modules), `slime-viewer.js` (Three.js `rimuru_slime.glb` via importmap `three@0.185.1`, idle spin), `particles.js` (vanilla canvas, mouse grab/repel). Both lazy via `requestIdleCallback`, never touch `loaderDone`.
-- `assets/` — `icons.svg` (sun/moon/location only, 3 symbols), `slime.webp` (poster), `rimuru.webp`, `saber.mp4` + `saber-720p.webm` (WebM preferred), `rimuru_slime.glb` (2.3M). Hero video + slime both use `<video>`/`<canvas>` with transparent bg.
-- No `.github/`, no CI, no `opencode.json`.
+- `index.html` — single page `#home`/`#about`/`#project`/`#contact`, no templating. Importmap `three@0.185.1`. CSS load order matters: `variables.css` → `base.css` → `navbar.css` → `home.css` → `about.css` → `project.css` → `contact.css` → `responsive.css`.
+- `css/variables.css` — all custom props (`--bg`, `--text`, `--accent`, `--accent-rgb`, glass/shadows) + `[data-theme="light"]` overrides.
+- `js/script.js` — main `DOMContentLoaded`, no modules. `js/slime-viewer.js` (`rimuru_slime.glb` 2.3M) + `js/particles.js` lazy via `requestIdleCallback`, must never call `loaderDone()`.
+- `assets/` — no icon sprite (brand icons via `https://cdn.simpleicons.org/<slug>/<hex>` as `<img>`, `sun`/`moon`/`location` inlined in `index.html`), `slime.webp` (preload + favicon + video `poster`), `saber.webp` (`loading="lazy"`, hero image ≤1024px), `saber.mp4` + `saber-720p.webm` (preferred) hero video desktop, `rimuru_slime.glb`. Extra root: `CNAME`, `robots.txt`, `sitemap.xml`, `LICENSE`.
 
-## CSS Conventions
-- Theme via `document.documentElement.setAttribute("data-theme", ...)` + `localStorage.getItem("theme")` key `"theme"`; fallback `prefers-color-scheme: light`.
-- Hero parallax targets `.hero-content` (`translateY` + opacity on scroll) — keep that element intact or parallax breaks.
-- Responsive breakpoints: `1024px` (tablet), `768px` and `480px`, all in `css/responsive.css`. Fluid typography via `clamp()`, touch targets ≥44px.
-- Hero layout: `.hero-grid` (2-col desktop, 1-col mobile) with `.hero-text` left / `.hero-side` right. GitHub avatar `.img-wrapper` + stats use classes from `about.css` (`.about-side-block`, `.github-stats`) shared across hero — changing those affects both places.
+## Hero & Responsive
+- `.hero-bg` holds both `<video>` and `<img class="hero-bg-img">` sharing `object-fit:cover; opacity:0.15; mix-blend-mode:screen` (light `0.2`/`multiply`). Desktop: `img{display:none}`; `≤1024px` (`responsive.css`): `video{display:none}` + `img{display:block}` (lazy, no autoplay cost).
+- `.hero-grid` 2-col desktop, 1-col `≤768px`. At `≤768px` `hero-side{order:-1}` (avatar/stats) above `hero-text{order:1}` (title/tagline/CTA). Keep `.hero-content` intact — parallax (`translateY` + `opacity`, rAF throttled) targets it.
+- Breakpoints all in `css/responsive.css`: `1024px`, `768px`, `480px`. `clamp()` typography, touch targets ≥44px.
+- `≤1024px`: `#slime-mount{display:none}` + `index.html` skips `import("./js/slime-viewer.js")` + `slime-viewer.js` guard (`matchMedia(max-width:1024px)` + `webglAvailable()` defense-in-depth).
+- `prefers-reduced-motion:reduce` hides `video` only (image stays), disables aurora/avatar/slime animations; `particles.js` early-returns with `display:none`.
 
 ## JS Gotchas
-- Loader hides after **2** fetches complete (`loadCount === 2`: `fetchGitHubStats()` + `fetchGitHubRepos()`). Removing either fetch without adjusting `loaderDone()` leaves loader stuck.
-- GitHub user hardcoded: `const GITHUB_USER = "szmaou"` in `js/script.js`. API: `https://api.github.com/users/${GITHUB_USER}` and `/repos?sort=updated&per_page=50` (filtered `!r.fork && r.description`).
-- Stat IDs `gh-repos` / `gh-followers` / `gh-following` and `#github-stats` — JS selects by ID, don't rename without updating `script.js`.
-- Repo pagination: `getPerPage()` = 3 on mobile (≤768px), 6 on desktop; resize resets to page 1 when crossing breakpoint.
-- Active nav uses `offsetTop - 120` threshold + `scroll-padding-top: 70px`.
-- `js/slime-viewer.js` and `js/particles.js` are lazy via `requestIdleCallback` and must never call `loaderDone()` — loader stays gated on the 2 GitHub fetches.
-- Contributed repos: `CONTRIBUTED_REPOS = ["terarush/ping-uptime","cnp-plus/pplg"]` merged into `allRepos` via `Promise.allSettled`, deduplicated by `id/full_name`, filtered `!fork && description`.
+- Loader hides after **2** fetches (`loadCount===2`: `fetchGitHubStats()` + `fetchGitHubRepos()` via `Promise.allSettled` at `script.js:98`). Removing one without fixing `loaderDone()` stalls loader. Cached in `sessionStorage` `gh-cache-*` 5min.
+- GitHub user hardcoded `const GITHUB_USER="szmaou"` in `js/script.js`. APIs `users/${GITHUB_USER}` and `/repos?sort=updated&per_page=50` filtered `!fork && description`. `CONTRIBUTED_REPOS=["terarush/ping-uptime","cnp-plus/pplg"]` merged `Promise.allSettled`, dedup `id/full_name`.
+- Stat IDs `gh-repos`/`gh-followers`/`gh-following` + `#github-stats` — JS selects by ID, don't rename.
+- Repo pagination `getPerPage()` 3 `≤768px` else 6; `resize` resets to page 1 when crossing breakpoint (`prevPerPage`).
+- Active nav `offsetTop -120` + `scroll-padding-top:70px`.
+- Particles viewport-aware `computeConfig()`: mobile `≤768px` `MAX 25 / LINK 90 / SPEED 0.3 / DOT 1.4` vs desktop `60/110/0.4/1.6`, `COUNT=min(MAX, floor(innerWidth/24))`; recomputed on `resize`. Only `prefers-reduced-motion` blocks loop.
+- Shared classes `about.css` `.about-side-block`/`.github-stats` reused in hero — changes affect both.
 
 ## Editing Rules
-- Keep HTML well-formed; verify all referenced CSS classes exist across the 8 CSS files after moves.
-- Prefer existing CSS variables over new colors; match current GitHub-dark aesthetic.
-- No comments in code unless following existing `/* ─── Section ─── */` style.
+- Keep HTML well-formed; verify referenced classes exist across the 8 CSS files after moves.
+- Prefer existing CSS variables over new colors; match GitHub-dark aesthetic.
+- Comments only `/* ─── Section ─── */` style.

@@ -285,30 +285,30 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function getRepoIcon(language) {
     const iconMap = {
-      HTML: "repo-html",
-      CSS: "repo-css",
-      JavaScript: "repo-javascript",
-      TypeScript: "repo-typescript",
-      Python: "repo-python",
-      Java: "repo-java",
-      Kotlin: "repo-kotlin",
-      Vue: "repo-vue",
-      QML: "repo-qml",
-      Dart: "repo-dart",
-      Swift: "repo-swift",
-      PHP: "repo-php",
-      Ruby: "repo-ruby",
-      Shell: "repo-shell",
-      Lua: "repo-lua",
-      C: "repo-c",
-      "C++": "repo-cpp",
-      Rust: "repo-rust",
-      Go: "repo-go",
+      HTML: "html5/E34F26",
+      CSS: "css/1572B6",
+      JavaScript: "javascript/F7DF1E",
+      TypeScript: "typescript/3178C6",
+      Python: "python/3776AB",
+      Java: "openjdk/5382A1",
+      Kotlin: "kotlin/7F52FF",
+      Vue: "vuedotjs/4FC08D",
+      QML: "qt/41CD52",
+      Dart: "dart/0175C2",
+      Swift: "swift/F05138",
+      PHP: "php/777BB4",
+      Ruby: "ruby/CC342D",
+      Shell: "shell/4EAA25",
+      Lua: "lua/000080",
+      C: "c/A8B9CC",
+      "C++": "cplusplus/00599C",
+      Rust: "rust/DEA584",
+      Go: "go/00ADD8",
     };
 
-    const symbol = iconMap[language] || "repo-default";
+    const icon = iconMap[language] || "github/181717";
     const label = language || "Unknown";
-    return `<svg class="repo-icon" viewBox="0 0 24 24" width="22" height="22" role="img" aria-label="${escapeHtmlAttr(label)}"><use href="assets/icons.svg#${symbol}"/></svg>`;
+    return `<img class="repo-icon" src="https://cdn.simpleicons.org/${icon}" width="22" height="22" alt="" role="img" aria-label="${escapeHtmlAttr(label)}" loading="lazy" decoding="async" />`;
   }
 
   document.querySelectorAll(".sort-btn").forEach((btn) => {
